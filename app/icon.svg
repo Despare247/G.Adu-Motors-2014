@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Simplified for favicon legibility at small sizes: ring + GA monogram
+       only, no arced "G.ADU MOTORS" text (see components/Logo.tsx for the
+       full mark used in the header/footer). -->
+  <circle cx="32" cy="32" r="28" fill="#ffffff" stroke="#e02430" stroke-width="6" />
+  <text x="25" y="35" text-anchor="middle" dominant-baseline="central" font-family="Georgia, 'Times New Roman', serif" font-weight="900" font-style="italic" font-size="34" fill="#e02430">G</text>
+  <text x="39" y="36" text-anchor="middle" dominant-baseline="central" font-family="Georgia, 'Times New Roman', serif" font-weight="900" font-style="italic" font-size="25" fill="#e02430">A</text>
+</svg>

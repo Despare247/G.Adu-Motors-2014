@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Barlow Condensed", "Inter", sans-serif;
+
+  /* Ink — neutral scale spanning pure white to deep black.
+     Light sections use the low end (50-200), dark sections (the
+     "Shop Floor" inventory module, nav, footer) use the high end
+     (800-950). Mid-tones read as sleek metallic silver / slate-grey. */
+  --color-ink-50: #ffffff;
+  --color-ink-100: #f2f2f2;
+  --color-ink-200: #e2e2e2;
+  --color-ink-300: #c6c6c8;
+  --color-ink-400: #9a9a9e;
+  --color-ink-500: #737378;
+  --color-ink-600: #4c4c52;
+  --color-ink-700: #333338;
+  --color-ink-800: #1e1e22;
+  --color-ink-900: #131315;
+  --color-ink-950: #08080a;
+
+  /* Gold — the single accent used for high-priority actions, borders
+     and highlights. Deliberately restrained/metallic, not a bright yellow. */
+  --color-gold-50: #fbf8ee;
+  --color-gold-100: #f5ecd2;
+  --color-gold-200: #ead9a5;
+  --color-gold-300: #dec378;
+  --color-gold-400: #d4af37;
+  --color-gold-500: #c29a2e;
+  --color-gold-600: #a17f23;
+  --color-gold-700: #7d621c;
+  --color-gold-800: #5b4715;
+  --color-gold-900: #3d300e;
+  --color-gold-950: #241c08;
+
+  /* Oxblood — used only for destructive actions and rejection states,
+     kept muted so it reads as "industrial hazard" rather than bootstrap-red. */
+  --color-danger-400: #b33a3a;
+  --color-danger-500: #8f2a2a;
+  --color-danger-600: #711f1f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+  color: #131315;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #e2e2e2;
+}
+::-webkit-scrollbar-thumb {
+  background: #c6c6c8;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9a9a9e;
+}
+
+/* Infinite marquee helper for the brand strip */
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+/* Realtime order-alert flash for the admin dashboard — gold pulse */
+@keyframes flash-banner {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.55); }
+  50% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+}
+
+.animate-flash-banner {
+  animation: flash-banner 1.4s ease-out 2;
+}
