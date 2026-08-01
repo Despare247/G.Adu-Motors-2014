@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" href="assets/gadu-logo.png">
+<link rel="stylesheet" href="_ds/modernist-3c25f5d8-2fab-413c-ad62-0cd43737cfad/styles.css">
+<script src="_ds/modernist-3c25f5d8-2fab-413c-ad62-0cd43737cfad/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)}
+a{color:var(--color-accent-700);text-decoration:none}
+a:hover{color:var(--color-accent)}
+.aw-wrap{max-width:1220px;margin:0 auto;padding:0 var(--space-6)}
+.aw-tile{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border:1px solid var(--color-divider);background:var(--color-bg);cursor:pointer;text-align:left}
+.aw-tile:hover{background:var(--color-neutral-100)}
+.aw-tile svg{color:var(--color-accent)}
+.aw-pcard{display:flex;flex-direction:column;border:1px solid var(--color-divider);background:var(--color-bg)}
+.aw-pcard:hover{box-shadow:var(--shadow-md)}
+.aw-marquee{display:flex;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)}
+.aw-marquee-track{display:flex;width:max-content;animation:aw-marquee 26s linear infinite}
+@keyframes aw-marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.aw-fab{position:fixed;right:var(--space-6);bottom:var(--space-6);z-index:50;box-shadow:var(--shadow-lg)}
+.aw-footcol h4{margin:0 0 var(--space-2);font:700 11px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+</style>
+</helmet>
+
+<sc-if value="{{ isSite }}" hint-placeholder-val="{{ true }}">
+<div>
+
+<nav class="nav" style="position:sticky;top:0;z-index:40;background:var(--color-bg)">
+  <span class="nav-brand" style="display:flex;align-items:center;gap:10px">
+    <div style="width:34px;height:34px"><image-slot id="brand-logo" shape="circle" placeholder="Logo" src="assets/gadu-logo.png"></image-slot></div>
+    G.ADU MOTORS
+  </span>
+  <a href="#home">Home</a>
+  <a href="#inventory">Inventory</a>
+  <a href="#categories">Categories</a>
+  <a href="#services">Services</a>
+  <a href="#about">About Us</a>
+  <a href="#contact">Contact</a>
+  <a href="tel:+233244670601" style="margin-left:auto;font-weight:700">024 467 0601</a>
+</nav>
+
+<section id="home" class="aw-wrap" style="padding-top:var(--space-8);padding-bottom:var(--space-8);display:grid;grid-template-columns:1.1fr .9fr;gap:var(--space-8);align-items:center">
+  <div>
+    <span class="tag tag-outline" style="white-space:nowrap">Japanese &amp; Korean Parts · Kumasi</span>
+    <h1 style="font:700 50px/1.05 var(--font-heading);margin:var(--space-4) 0">Quality auto parts. Reliable service. Your trusted source in Kumasi.</h1>
+    <p style="font-size:17px;line-height:1.6;max-width:52ch;opacity:.85">Genuine and quality-tested spare parts for Toyota, Honda, Nissan, Mazda, Mitsubishi, Suzuki, Subaru, Hyundai, Kia and more — new and used. Browse the live inventory and name your price.</p>
+    <div style="display:flex;gap:var(--space-3);margin-top:var(--space-5)">
+      <a href="#inventory" class="btn btn-primary">Shop Now<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <a href="tel:+233244670601" class="btn btn-secondary">024 467 0601</a>
+    </div>
+  </div>
+  <div style="aspect-ratio:4/3" class="grayscale"><image-slot id="hero-image" shape="rect" placeholder="Drop a workshop/garage photo"></image-slot></div>
+</section>
+
+<div class="hr"></div>
+<section id="categories" class="aw-wrap" style="padding:var(--space-6) 0">
+  <h2 style="font:700 22px var(--font-heading);margin:0 0 var(--space-2)">Shop by origin &amp; condition</h2>
+  <p style="font-size:13px;opacity:.6;margin:0 0 var(--space-5)">Jump straight to what your vehicle needs</p>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+    <button type="button" class="aw-tile" onClick="{{ quickFilterJapanese }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg><span style="font-weight:700">Japanese Parts</span><span style="font-size:12px;opacity:.6">Toyota, Honda, Nissan, Mazda &amp; more</span></button>
+    <button type="button" class="aw-tile" onClick="{{ quickFilterKorean }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg><span style="font-weight:700">Korean Parts</span><span style="font-size:12px;opacity:.6">Hyundai, Kia</span></button>
+    <button type="button" class="aw-tile" onClick="{{ quickFilterNew }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg><span style="font-weight:700">New Parts</span><span style="font-size:12px;opacity:.6">Sealed, unused stock</span></button>
+    <button type="button" class="aw-tile" onClick="{{ quickFilterUsed }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg><span style="font-weight:700">Used Parts</span><span style="font-size:12px;opacity:.6">Quality-tested take-offs</span></button>
+  </div>
+</section>
+
+<div class="hr"></div>
+<section id="inventory" class="aw-wrap" style="padding:var(--space-8) 0">
+  <span class="tag tag-outline">The Shop Floor</span>
+  <h2 style="font:700 28px var(--font-heading);margin:var(--space-3) 0 0">Live inventory &amp; negotiation</h2>
+  <p style="font-size:13px;opacity:.6;margin:var(--space-1) 0 var(--space-5)">Showing {{ resultCount }} of {{ totalCount }} parts — name your price.</p>
+
+  <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-5)">
+    <div class="field" style="flex:1;min-width:220px;margin:0"><input class="input" placeholder="Search by name, make or model…" value="{{ search }}" onChange="{{ onSearch }}"></div>
+    <div class="field" style="margin:0;min-width:160px"><select class="input" value="{{ origin }}" onChange="{{ onOrigin }}"><option value="">All Origins</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option></select></div>
+    <div class="field" style="margin:0;min-width:160px"><select class="input" value="{{ condition }}" onChange="{{ onCondition }}"><option value="">All Conditions</option><option value="New">New</option><option value="Used">Used</option></select></div>
+  </div>
+
+  <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+    <div class="card" style="text-align:center;padding:var(--space-8)"><div class="card-title">No parts match your filters</div><p class="card-body">Try a different search term, origin or condition.</p></div>
+  </sc-if>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4)">
+    <sc-for list="{{ filteredProducts }}" as="p" hint-placeholder-count="8">
+      <div class="aw-pcard">
+        <div style="aspect-ratio:4/3" class="grayscale"><image-slot id="{{ p.imgId }}" shape="rect" placeholder="Drop a part photo"></image-slot></div>
+        <div style="padding:var(--space-4);display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;gap:8px"><span class="tag tag-outline">{{ p.origin }}</span><span class="tag {{ p.condClass }}">{{ p.condition }}</span></div>
+          <div style="font-weight:700;font-size:15px">{{ p.name }}</div>
+          <div style="font-size:12px;opacity:.6">{{ p.make }} {{ p.model }} · {{ p.year }}</div>
+          <div style="font:700 20px var(--font-heading);margin-top:4px">GH₵ {{ p.retailFmt }}</div>
+
+          <sc-if value="{{ p.isIdle }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+              <button type="button" class="btn btn-primary btn-block" onClick="{{ p.onBuyNow }}">Buy Now</button>
+              <button type="button" class="btn btn-secondary btn-block" onClick="{{ p.onMakeOffer }}">Make an Offer</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.isOffering }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ p.onOfferSubmit }}" style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+              <input type="number" min="1" class="input" placeholder="Your offer (GH₵)" value="{{ p.offerValue }}" onChange="{{ p.onOfferChange }}">
+              <div style="display:flex;gap:8px">
+                <button type="submit" class="btn btn-primary" style="flex:1">Submit Offer</button>
+                <button type="button" class="btn btn-ghost" onClick="{{ p.onCancelOffer }}">Cancel</button>
+              </div>
+            </form>
+          </sc-if>
+
+          <sc-if value="{{ p.hasOfferMsg }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:8px;border:1px solid var(--color-divider);padding:10px;font-size:12px;line-height:1.5">
+              {{ p.offerMsgText }}
+              <button type="button" onClick="{{ p.onTryAgain }}" style="display:block;width:100%;margin-top:6px;text-align:center;font:700 10px var(--font-body);text-transform:uppercase;letter-spacing:.04em;background:none;border:none;cursor:pointer;color:var(--color-accent-700)">Try a new offer</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ p.isPaid }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:8px;border:1px solid var(--color-divider);padding:10px;font-size:12px;line-height:1.5">
+              <div style="display:flex;align-items:center;gap:6px;font-weight:700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Payment successful!</div>
+              <p style="margin:4px 0 0;opacity:.75">Thank you — GH₵ {{ p.paidAmountFmt }} received for {{ p.name }}. {{ p.paidNote }}</p>
+              <sc-if value="{{ p.hasDeliveryAddress }}" hint-placeholder-val="{{ false }}">
+                <a href="{{ p.finalizeWaLink }}" target="_blank" rel="noopener" class="btn btn-primary btn-block" style="margin-top:8px">Finalize with Shop on WhatsApp</a>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<div class="hr"></div>
+<section style="padding:var(--space-6) 0">
+  <p style="margin:0 0 var(--space-4);text-align:center;font:700 11px var(--font-body);text-transform:uppercase;letter-spacing:.3em;opacity:.5">Brands &amp; makes we stock</p>
+  <div class="aw-marquee">
+    <div class="aw-marquee-track">
+      <sc-for list="{{ brandsDoubled }}" as="b" hint-placeholder-count="24">
+        <span style="margin:0 32px;font:700 22px var(--font-heading);text-transform:uppercase;opacity:.4">{{ b }}</span>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+<section id="services" class="aw-wrap" style="padding:var(--space-8) 0">
+  <div style="max-width:560px">
+    <span class="tag tag-outline">Why Choose Us</span>
+    <h2 style="font:700 26px var(--font-heading);margin:var(--space-3) 0 0">Reliable service you can count on</h2>
+    <p style="font-size:14px;opacity:.7;margin:var(--space-2) 0 0">G.Adu Motors specialises in the retail and supply of car spare parts for Japanese and Korean automotive brands.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-top:var(--space-6)">
+    <div class="card"><div class="card-kicker">Quality</div><div class="card-title">Genuine &amp; Quality Parts</div><p class="card-body">New and original take-off used parts, each inspected and tested before it reaches you.</p></div>
+    <div class="card"><div class="card-kicker">Expertise</div><div class="card-title">Expert Part Matching</div><p class="card-body">Tell us your make, model and year — we identify the exact spare part your vehicle needs.</p></div>
+    <div class="card"><div class="card-kicker">Supply</div><div class="card-title">Retail &amp; Bulk Supply</div><p class="card-body">From single walk-in purchases to supplying garages and fleets across Kumasi and beyond.</p></div>
+    <div class="card"><div class="card-kicker">Trust</div><div class="card-title">Trusted Local Dealer</div><p class="card-body">Years of dependable service in Kumasi. Honest advice and fair pricing on every part.</p></div>
+  </div>
+</section>
+
+<div class="hr"></div>
+<section id="about" class="aw-wrap" style="padding:var(--space-8) 0;display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:center">
+  <div style="aspect-ratio:4/3" class="grayscale"><image-slot id="about-image" shape="rect" placeholder="Drop a photo of the parts shelves"></image-slot></div>
+  <div>
+    <span class="tag tag-outline">About G.Adu Motors</span>
+    <h2 style="font:700 24px var(--font-heading);line-height:1.2;margin:var(--space-3) 0 0">Your trusted Japanese &amp; Korean auto spare parts dealer in Kumasi</h2>
+    <p style="font-size:14px;line-height:1.6;opacity:.8;margin-top:var(--space-3)">G.Adu Motors stocks and sells specialised parts for a wide variety of Japanese and Korean vehicles. Whether you drive a Toyota, Honda, Nissan, Mazda, Mitsubishi, Suzuki, Subaru, Hyundai or Kia, our team helps you find the right spare part — quickly and at a fair price.</p>
+    <p style="font-size:14px;line-height:1.6;opacity:.8;margin-top:var(--space-2)">Looking for a specific spare part such as an engine, brakes or suspension component? Browse our live inventory, make an offer, and claim it instantly on WhatsApp.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);margin-top:var(--space-4);font-size:13px">
+      <div>· Specialised in Japanese &amp; Korean brands</div>
+      <div>· Engine, brake, suspension &amp; body parts</div>
+      <div>· New and quality-tested used options</div>
+      <div>· Negotiate your price on WhatsApp</div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+<section id="contact" class="aw-wrap" style="padding:var(--space-8) 0">
+  <span class="tag tag-outline">Visit Us</span>
+  <h2 style="font:700 26px var(--font-heading);margin:var(--space-3) 0 var(--space-5)">Contact &amp; opening hours</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-4)">
+    <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+      <div class="card"><div class="card-kicker">Location</div><div class="card-title" style="font-size:14px">Suame, Kumasi, Ghana</div></div>
+      <a href="tel:+233244670601" class="card"><div class="card-kicker">Phone</div><div class="card-title" style="font-size:14px">024 467 0601</div></a>
+      <a href="mailto:gadumotors2014@gmail.com" class="card"><div class="card-kicker">Email</div><div class="card-title" style="font-size:14px">gadumotors2014@gmail.com</div></a>
+    </div>
+    <div class="card">
+      <div class="card-title">Operating Hours</div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span>Monday</span><span style="font-weight:700">8:30 AM – 5:30 PM</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span>Tuesday – Friday</span><span style="font-weight:700">8:00 AM – 5:30 PM</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span>Saturday</span><span style="font-weight:700">9:00 AM – 4:00 PM</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px"><span>Sunday</span><span style="font-weight:700">Closed</span></div>
+    </div>
+    <div style="border:1px solid var(--color-divider);overflow:hidden"><iframe title="G.Adu Motors location — Kumasi" src="https://www.google.com/maps?q=Kumasi,Ghana&output=embed" style="width:100%;height:100%;min-height:260px;border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+  </div>
+</section>
+
+<div style="background:var(--color-accent);color:#fff;padding:var(--space-8) 0">
+  <div class="aw-wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-4)">
+    <h2 style="font:700 28px var(--font-heading);margin:0">Need a part fast?</h2>
+    <a href="{{ waLinkGeneral }}" target="_blank" rel="noopener" class="btn btn-secondary" style="background:#fff;color:var(--color-accent-700);border-color:#fff">Chat with us on WhatsApp</a>
+  </div>
+</div>
+
+<div class="hr"></div>
+<footer class="aw-wrap" style="padding:var(--space-8) 0 var(--space-6);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-6)">
+  <div>
+    <div style="display:flex;align-items:center;gap:8px;font:700 16px var(--font-heading)">
+      <div style="width:28px;height:28px"><image-slot id="brand-logo" shape="circle" placeholder="Logo" src="assets/gadu-logo.png"></image-slot></div>
+      G.ADU MOTORS
+    </div>
+    <p style="font-size:13px;opacity:.7;max-width:32ch;margin-top:var(--space-2)">Japanese &amp; Korean auto spare parts dealer in Kumasi. Quality parts, reliable service — negotiate your price and claim it on WhatsApp.</p>
+  </div>
+  <div class="aw-footcol"><h4>Quick Links</h4><a href="#inventory" style="display:block;font-size:13px">Live Inventory</a><a href="#services" style="display:block;font-size:13px">Services</a><a href="#about" style="display:block;font-size:13px">About Us</a></div>
+  <div class="aw-footcol"><h4>Contact</h4><span style="display:block;font-size:13px">Kumasi, Ghana</span><span style="display:block;font-size:13px">024 467 0601</span><span style="display:block;font-size:13px">gadumotors2014@gmail.com</span></div>
+  <div class="aw-footcol"><h4>Hours</h4><span style="display:block;font-size:13px">Mon–Fri 8–5:30</span><span style="display:block;font-size:13px">Sat 9–4</span><span style="display:block;font-size:13px">Sun Closed</span></div>
+</footer>
+<div class="hr"></div>
+<div class="aw-wrap" style="padding:var(--space-4) 0;font-size:12px;opacity:.55;display:flex;justify-content:space-between;gap:var(--space-4)"><span>© 2026 G.Adu Motors. All rights reserved. Kumasi, Ghana.</span><a onClick="{{ goAdmin }}" style="cursor:pointer;opacity:.7">Staff login</a></div>
+
+<a href="{{ waLinkGeneral }}" target="_blank" rel="noopener" class="btn btn-primary aw-fab">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+  WhatsApp
+</a>
+
+<sc-if value="{{ modal.isOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ modal.onClose }}" style="position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.5)"></div>
+  <div style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:81;width:min(440px,92vw);max-height:90vh;overflow-y:auto;border:1px solid var(--color-divider);background:var(--color-bg);box-shadow:var(--shadow-lg)">
+    <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-divider);padding:var(--space-4)">
+      <h3 style="margin:0;font:700 18px var(--font-heading)">Purchase Details</h3>
+      <button type="button" class="btn btn-ghost btn-icon" onClick="{{ modal.onClose }}" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    </div>
+    <form onSubmit="{{ modal.onSubmit }}" style="padding:var(--space-4)">
+      <p style="margin:0 0 var(--space-4);font-size:14px">{{ modal.productName }} — <strong>GH₵ {{ modal.amountFmt }}</strong></p>
+      <div class="field"><label>Full Name</label><input class="input" value="{{ modal.name }}" onChange="{{ modal.setName }}" placeholder="Kwame Mensah" required=""></div>
+      <div class="field"><label>Phone Number</label><input class="input" type="tel" value="{{ modal.phone }}" onChange="{{ modal.setPhone }}" placeholder="024 123 4567" required=""></div>
+      <div class="field"><label>Mobile Money Network</label><select class="input" value="{{ modal.network }}" onChange="{{ modal.setNetwork }}"><option>MTN MoMo</option><option>Telecel Cash</option><option>AT Money</option></select></div>
+
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:var(--space-2)">Fulfillment Method</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);margin-bottom:var(--space-4)">
+        <button type="button" class="btn {{ modal.pickupClass }}" onClick="{{ modal.choosePickup }}">Store Pickup</button>
+        <button type="button" class="btn {{ modal.deliveryClass }}" onClick="{{ modal.chooseDelivery }}">Delivery</button>
+      </div>
+
+      <sc-if value="{{ modal.isPickup }}" hint-placeholder-val="{{ true }}">
+        <p style="margin:0 0 var(--space-4);border:1px solid var(--color-divider);padding:10px;font-size:12px;line-height:1.5">You will pick up your item at our shop in Suame Magazine, Kumasi after successful payment.</p>
+      </sc-if>
+
+      <sc-if value="{{ modal.isDelivery }}" hint-placeholder-val="{{ false }}">
+        <div class="field"><label>Are you located within Kumasi?</label><select class="input" value="{{ modal.kumasiSelect }}" onChange="{{ modal.setKumasi }}"><option value="" disabled="">Select an option…</option><option value="yes">Yes, within Kumasi</option><option value="no">No, outside Kumasi</option></select></div>
+        <sc-if value="{{ modal.showAddress }}" hint-placeholder-val="{{ false }}">
+          <div class="field"><label>Delivery Address / Landmark in Kumasi</label><textarea class="input" rows="3" placeholder="e.g. Near Suame Roundabout, opposite the fuel station" value="{{ modal.deliveryAddress }}" onChange="{{ modal.setAddress }}"></textarea></div>
+        </sc-if>
+        <sc-if value="{{ modal.showOutsideNote }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0 0 var(--space-4);border:1px solid var(--color-divider);padding:10px;font-size:12px;line-height:1.5">Inter-city delivery is arranged directly with the shop over WhatsApp — payment happens once you've agreed on the waybill details.</p>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ modal.hasError }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-bottom:var(--space-4);border:1px solid var(--color-divider);padding:10px;font-size:12px;color:var(--color-accent-700)">{{ modal.error }}</div>
+      </sc-if>
+
+      <sc-if value="{{ modal.showOutsideNote }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ modal.outsideWaLink }}" target="_blank" rel="noopener" onClick="{{ modal.onClose }}" class="btn btn-primary btn-block">Discuss Inter-City Delivery on WhatsApp</a>
+      </sc-if>
+      <sc-if value="{{ modal.showPayButton }}" hint-placeholder-val="{{ true }}">
+        <button type="submit" class="btn btn-primary btn-block">Continue to Payment</button>
+        <p style="margin:var(--space-3) 0 0;text-align:center;font-size:11px;opacity:.6">You'll pay via {{ modal.network }} or card on the next screen, secured by Paystack.</p>
+      </sc-if>
+    </form>
+  </div>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+<div class="aw-wrap" style="padding:var(--space-6) 0 var(--space-8)">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-6)">
+    <div>
+      <span class="tag tag-outline">Admin Dashboard</span>
+      <h1 style="font:700 28px var(--font-heading);margin:var(--space-3) 0 0">Manage inventory &amp; orders</h1>
+    </div>
+    <a onClick="{{ goSite }}" style="cursor:pointer;font-size:13px;font-weight:700">← Back to site</a>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-bottom:var(--space-6)">
+    <div class="card"><div class="card-kicker">Revenue</div><div class="card-title" style="font-size:26px">GH₵ {{ stats.revenueFmt }}</div></div>
+    <div class="card"><div class="card-kicker">Inventory</div><div class="card-title" style="font-size:26px">{{ stats.productCount }}</div></div>
+    <div class="card"><div class="card-kicker">Orders</div><div class="card-title" style="font-size:26px">{{ stats.orderCount }}</div></div>
+  </div>
+
+  <div style="margin-bottom:var(--space-6)">
+    <h3 style="font:700 18px var(--font-heading);margin:0 0 var(--space-3)">Recent Orders</h3>
+    <sc-if value="{{ noOrders }}" hint-placeholder-val="{{ false }}"><p style="font-size:13px;opacity:.6">No orders yet. New sales will appear here.</p></sc-if>
+    <sc-if value="{{ hasOrders }}" hint-placeholder-val="{{ false }}">
+      <table class="table"><thead><tr><th>Part</th><th>Buyer</th><th>Fulfillment</th><th>Amount</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="2">
+            <tr><td>{{ o.productName }}</td><td>{{ o.buyerName }}</td><td>{{ o.fulfillmentLabel }}</td><td style="font-weight:700">GH₵ {{ o.amountFmt }}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </sc-if>
+  </div>
+
+  <form onSubmit="{{ onAddPart }}" class="card" style="margin-bottom:var(--space-6);padding:var(--space-5)">
+    <div class="card-title" style="margin-bottom:var(--space-4)">Add New Part</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3)">
+      <div class="field"><label>Title</label><input class="input" placeholder="e.g. Toyota Corolla Headlight" value="{{ adminForm.name }}" onChange="{{ setAdminName }}" required=""></div>
+      <div class="field"><label>Make</label><input class="input" placeholder="e.g. Toyota" value="{{ adminForm.make }}" onChange="{{ setAdminMake }}" required=""></div>
+      <div class="field"><label>Model</label><input class="input" placeholder="e.g. Corolla" value="{{ adminForm.model }}" onChange="{{ setAdminModel }}" required=""></div>
+      <div class="field"><label>Year</label><input type="number" class="input" placeholder="e.g. 2018" value="{{ adminForm.year }}" onChange="{{ setAdminYear }}" required=""></div>
+      <div class="field"><label>Vehicle Origin</label><select class="input" value="{{ adminForm.origin }}" onChange="{{ setAdminOrigin }}"><option>Japanese</option><option>Korean</option></select></div>
+      <div class="field"><label>Condition</label><select class="input" value="{{ adminForm.condition }}" onChange="{{ setAdminCondition }}"><option>New</option><option>Used</option></select></div>
+      <div class="field"><label>Retail Price (GH₵)</label><input type="number" min="0" class="input" placeholder="e.g. 250" value="{{ adminForm.retailPrice }}" onChange="{{ setAdminRetail }}" required=""></div>
+      <div class="field"><label>Floor Price (GH₵)</label><input type="number" min="0" class="input" placeholder="e.g. 200" value="{{ adminForm.floorPrice }}" onChange="{{ setAdminFloor }}" required=""></div>
+    </div>
+    <sc-if value="{{ adminFormError }}" hint-placeholder-val="{{ false }}"><div style="margin-top:var(--space-3);border:1px solid var(--color-divider);padding:10px;font-size:12px;color:var(--color-accent-700)">{{ adminFormError }}</div></sc-if>
+    <button type="submit" class="btn btn-primary" style="margin-top:var(--space-4)">Add Part</button>
+  </form>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4)">
+    <sc-for list="{{ adminProducts }}" as="p" hint-placeholder-count="8">
+      <div class="aw-pcard" style="position:relative">
+        <button type="button" onClick="{{ p.onDelete }}" class="tag tag-accent" style="position:absolute;right:10px;top:10px;z-index:2;border:none;cursor:pointer">Delete</button>
+        <div style="aspect-ratio:4/3" class="grayscale"><image-slot id="{{ p.imgId }}" shape="rect" placeholder="Drop a part photo"></image-slot></div>
+        <div style="padding:var(--space-4);display:flex;flex-direction:column;gap:6px">
+          <span class="tag tag-outline" style="width:fit-content">{{ p.origin }}</span>
+          <div style="font-weight:700;font-size:15px">{{ p.name }}</div>
+          <div style="font-size:12px;opacity:.6">{{ p.make }} {{ p.model }} · {{ p.year }}</div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:13px">
+            <div><span style="display:block;font-size:10px;text-transform:uppercase;opacity:.5">Retail</span><span style="font-weight:700">GH₵ {{ p.retailFmt }}</span></div>
+            <div style="text-align:right"><span style="display:block;font-size:10px;text-transform:uppercase;opacity:.5">Floor</span><span style="font-weight:700;color:var(--color-accent-700)">GH₵ {{ p.floorFmt }}</span></div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;233244670601&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Ordering&quot;}}">
+const BRANDS = ['Toyota','Honda','Nissan','Mazda','Mitsubishi','Suzuki','Subaru','Hyundai','Kia','Bosch','Denso','NGK'];
+const WHATSAPP = '233244670601';
+
+const SEED_PRODUCTS = [
+  { id:'p1', name:'Toyota Corolla Headlight Assembly', origin:'Japanese', make:'Toyota', model:'Corolla', year:2016, condition:'Used', retail:220, floor:180 },
+  { id:'p2', name:'Honda Civic Brake Pad Set', origin:'Japanese', make:'Honda', model:'Civic', year:2018, condition:'New', retail:60, floor:45 },
+  { id:'p3', name:'Nissan Almera Alternator', origin:'Japanese', make:'Nissan', model:'Almera', year:2015, condition:'Used', retail:250, floor:200 },
+  { id:'p4', name:'Hyundai Elantra Rear Bumper', origin:'Korean', make:'Hyundai', model:'Elantra', year:2019, condition:'Used', retail:300, floor:240 },
+  { id:'p5', name:'Kia Sportage Side Mirror', origin:'Korean', make:'Kia', model:'Sportage', year:2020, condition:'New', retail:150, floor:120 },
+  { id:'p6', name:'Mazda 3 Clutch Kit', origin:'Japanese', make:'Mazda', model:'3', year:2017, condition:'New', retail:210, floor:170 },
+  { id:'p7', name:'Hyundai Sonata Front Shock Absorber Pair', origin:'Korean', make:'Hyundai', model:'Sonata', year:2016, condition:'Used', retail:180, floor:140 },
+  { id:'p8', name:'Kia Picanto Complete Engine', origin:'Korean', make:'Kia', model:'Picanto', year:2018, condition:'Used', retail:900, floor:750 },
+];
+
+class Component extends DCLogic {
+  state = {
+    view: 'site',
+    products: SEED_PRODUCTS.map(p => ({ ...p })),
+    orders: [],
+    search: '', origin: '', condition: '',
+    cardStates: {},
+    modal: { open: false, productId: null, amount: 0, name: '', phone: '', network: 'MTN MoMo', fulfillment: 'pickup', kumasi: '', address: '', error: '' },
+    adminForm: { name: '', make: '', model: '', year: '', origin: 'Japanese', condition: 'New', retailPrice: '', floorPrice: '' },
+    adminFormError: '',
+  };
+
+  fmt(n) { return Number(n).toLocaleString('en-US'); }
+  goAdmin = () => this.setState({ view: 'admin' });
+  goSite = () => { this.setState({ view: 'site' }); if (typeof window !== 'undefined') window.scrollTo(0, 0); };
+
+  onSearch = (e) => this.setState({ search: e.target.value });
+  onOrigin = (e) => this.setState({ origin: e.target.value });
+  onCondition = (e) => this.setState({ condition: e.target.value });
+  quickFilter = (origin, condition) => () => this.setState({ origin: origin || '', condition: condition || '' });
+
+  cardState(id) { return this.state.cardStates[id] || { stage: 'idle', offerValue: '', offerMsg: null, paidAmount: null, deliveryAddress: null }; }
+  patchCard(id, patch) { this.setState(s => ({ cardStates: { ...s.cardStates, [id]: { ...this.cardState(id), ...patch } } })); }
+
+  openBuyNow = (id) => () => { const p = this.state.products.find(x => x.id === id); this.openModal(id, p.retail); };
+  startOffer = (id) => () => this.patchCard(id, { stage: 'offering', offerMsg: null });
+  cancelOffer = (id) => () => this.patchCard(id, { stage: 'idle', offerValue: '', offerMsg: null });
+  setOfferValue = (id) => (e) => this.patchCard(id, { offerValue: e.target.value });
+  submitOffer = (id) => (e) => {
+    e.preventDefault();
+    const p = this.state.products.find(x => x.id === id);
+    const amount = Number(this.cardState(id).offerValue);
+    if (!amount || amount <= 0) { this.patchCard(id, { offerMsg: { ok: false, text: 'Enter a valid offer amount.' } }); return; }
+    if (amount < p.floor) {
+      this.patchCard(id, { stage: 'offering', offerMsg: { ok: false, text: `Offer too low. Our lowest price for this item is GH₵ ${this.fmt(p.floor)}.` } });
+    } else {
+      this.patchCard(id, { stage: 'idle', offerMsg: { ok: true, text: 'Offer accepted!' } });
+      this.openModal(id, amount);
+    }
+  };
+
+  openModal = (productId, amount) => this.setState(s => ({ modal: { ...s.modal, open: true, productId, amount, name: '', phone: '', network: 'MTN MoMo', fulfillment: 'pickup', kumasi: '', address: '', error: '' } }));
+  closeModal = () => this.setState(s => ({ modal: { ...s.modal, open: false } }));
+  setModalName = (e) => this.setState(s => ({ modal: { ...s.modal, name: e.target.value } }));
+  setModalPhone = (e) => this.setState(s => ({ modal: { ...s.modal, phone: e.target.value } }));
+  setModalNetwork = (e) => this.setState(s => ({ modal: { ...s.modal, network: e.target.value } }));
+  choosePickup = () => this.setState(s => ({ modal: { ...s.modal, fulfillment: 'pickup', kumasi: '', address: '' } }));
+  chooseDelivery = () => this.setState(s => ({ modal: { ...s.modal, fulfillment: 'delivery' } }));
+  setModalKumasi = (e) => this.setState(s => ({ modal: { ...s.modal, kumasi: e.target.value } }));
+  setModalAddress = (e) => this.setState(s => ({ modal: { ...s.modal, address: e.target.value } }));
+
+  submitModal = (e) => {
+    e.preventDefault();
+    const m = this.state.modal;
+    if (!m.name.trim()) return this.setState(s => ({ modal: { ...s.modal, error: 'Enter your full name.' } }));
+    if (!/^0\d{9}$/.test(m.phone.replace(/[\s-]/g,'')) && !/^(\+233|233)\d{9}$/.test(m.phone.replace(/[\s-]/g,''))) return this.setState(s => ({ modal: { ...s.modal, error: 'Enter a valid Ghanaian mobile number, e.g. 024 123 4567.' } }));
+    if (m.fulfillment === 'delivery' && !m.kumasi) return this.setState(s => ({ modal: { ...s.modal, error: 'Let us know if you are located within Kumasi.' } }));
+    if (m.fulfillment === 'delivery' && m.kumasi === 'yes' && !m.address.trim()) return this.setState(s => ({ modal: { ...s.modal, error: 'Enter your delivery address / landmark in Kumasi.' } }));
+
+    const p = this.state.products.find(x => x.id === m.productId);
+    const order = { id: 'ord-' + Date.now(), productId: p.id, productName: p.name, buyerName: m.name, network: m.network, amount: m.amount, fulfillment: m.fulfillment, address: m.fulfillment === 'delivery' && m.kumasi === 'yes' ? m.address : null };
+    this.patchCard(p.id, { stage: 'idle', paidAmount: m.amount, deliveryAddress: order.address });
+    this.setState(s => ({ orders: [order, ...s.orders], modal: { ...s.modal, open: false } }));
+  };
+
+  setAdminName = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, name: e.target.value } }));
+  setAdminMake = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, make: e.target.value } }));
+  setAdminModel = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, model: e.target.value } }));
+  setAdminYear = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, year: e.target.value } }));
+  setAdminOrigin = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, origin: e.target.value } }));
+  setAdminCondition = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, condition: e.target.value } }));
+  setAdminRetail = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, retailPrice: e.target.value } }));
+  setAdminFloor = (e) => this.setState(s => ({ adminForm: { ...s.adminForm, floorPrice: e.target.value } }));
+
+  onAddPart = (e) => {
+    e.preventDefault();
+    const f = this.state.adminForm;
+    const retail = Number(f.retailPrice), floor = Number(f.floorPrice);
+    if (!f.name || !f.make || !f.model || !f.year) return this.setState({ adminFormError: 'Please fill in title, make, model and year.' });
+    if (!retail || !floor) return this.setState({ adminFormError: 'Retail price and floor price must both be greater than zero.' });
+    if (floor > retail) return this.setState({ adminFormError: 'Floor price cannot be higher than the retail price.' });
+    const product = { id: 'p' + Date.now(), name: f.name, origin: f.origin, make: f.make, model: f.model, year: Number(f.year), condition: f.condition, retail, floor };
+    this.setState(s => ({ products: [product, ...s.products], adminForm: { name:'', make:'', model:'', year:'', origin:'Japanese', condition:'New', retailPrice:'', floorPrice:'' }, adminFormError: '' }));
+  };
+  deleteProduct = (id) => () => this.setState(s => ({ products: s.products.filter(p => p.id !== id) }));
+
+  renderVals() {
+    const { view, products, orders, search, origin, condition, modal } = this.state;
+    const whatsappNumber = this.props.whatsappNumber || WHATSAPP;
+    const waLinkGeneral = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent('Hello Gadumotors, I have a question about a part.');
+
+    let filtered = products.filter(p =>
+      (!origin || p.origin === origin) &&
+      (!condition || p.condition === condition) &&
+      (!search.trim() || (p.name + ' ' + p.make + ' ' + p.model).toLowerCase().includes(search.trim().toLowerCase()))
+    );
+
+    const decorate = (p) => {
+      const cs = this.cardState(p.id);
+      return {
+        ...p,
+        imgId: 'part-img-' + p.id,
+        retailFmt: this.fmt(p.retail),
+        condClass: p.condition === 'New' ? 'tag-accent' : 'tag-neutral',
+        isIdle: cs.stage === 'idle' && !cs.paidAmount,
+        isOffering: cs.stage === 'offering',
+        isPaid: !!cs.paidAmount,
+        hasOfferMsg: !!cs.offerMsg && !cs.paidAmount && cs.stage !== 'offering',
+        offerMsgText: cs.offerMsg ? cs.offerMsg.text : '',
+        offerValue: cs.offerValue,
+        paidAmountFmt: cs.paidAmount ? this.fmt(cs.paidAmount) : '',
+        paidNote: cs.deliveryAddress ? "We'll be in touch to arrange your delivery." : "We'll be in touch to arrange pickup at our Kumasi branch.",
+        hasDeliveryAddress: !!cs.deliveryAddress,
+        finalizeWaLink: cs.deliveryAddress ? ('https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent('Hello Gadumotors, I just paid GH₵ ' + this.fmt(cs.paidAmount) + ' via Mobile Money for ' + p.name + '. My delivery address in Kumasi is: ' + cs.deliveryAddress + '.')) : '',
+        onBuyNow: this.openBuyNow(p.id),
+        onMakeOffer: this.startOffer(p.id),
+        onOfferSubmit: this.submitOffer(p.id),
+        onOfferChange: this.setOfferValue(p.id),
+        onCancelOffer: this.cancelOffer(p.id),
+        onTryAgain: this.startOffer(p.id),
+      };
+    };
+
+    const filteredProducts = filtered.map(decorate);
+    const brandsDoubled = [...BRANDS, ...BRANDS];
+
+    let selectedProduct = products.find(p => p.id === modal.productId);
+    const outsideKumasi = modal.fulfillment === 'delivery' && modal.kumasi === 'no';
+    const modalVals = {
+      isOpen: modal.open,
+      productName: selectedProduct ? selectedProduct.name : '',
+      amountFmt: this.fmt(modal.amount),
+      name: modal.name, phone: modal.phone, network: modal.network,
+      setName: this.setModalName, setPhone: this.setModalPhone, setNetwork: this.setModalNetwork,
+      choosePickup: this.choosePickup, chooseDelivery: this.chooseDelivery,
+      pickupClass: modal.fulfillment === 'pickup' ? 'btn-primary' : 'btn-secondary',
+      deliveryClass: modal.fulfillment === 'delivery' ? 'btn-primary' : 'btn-secondary',
+      isPickup: modal.fulfillment === 'pickup', isDelivery: modal.fulfillment === 'delivery',
+      kumasiSelect: modal.kumasi, setKumasi: this.setModalKumasi,
+      showAddress: modal.fulfillment === 'delivery' && modal.kumasi === 'yes',
+      deliveryAddress: modal.address, setAddress: this.setModalAddress,
+      showOutsideNote: outsideKumasi,
+      showPayButton: !outsideKumasi,
+      outsideWaLink: selectedProduct ? ('https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent('Hello Gadumotors, I want to buy the ' + selectedProduct.name + ' (Condition: ' + selectedProduct.condition + ') for GH₵ ' + this.fmt(modal.amount) + '. I am located outside Kumasi and need to arrange delivery/waybill to my location.')) : '',
+      hasError: !!modal.error, error: modal.error,
+      onClose: this.closeModal, onSubmit: this.submitModal,
+    };
+
+    const adminOrders = orders.map(o => ({ ...o, amountFmt: this.fmt(o.amount), fulfillmentLabel: o.fulfillment === 'delivery' ? ('Delivery to ' + (o.address || 'Kumasi')) : 'Store Pickup' }));
+    const adminProducts = products.map(p => ({ ...p, imgId: 'part-img-' + p.id, retailFmt: this.fmt(p.retail), floorFmt: this.fmt(p.floor), onDelete: this.deleteProduct(p.id) }));
+
+    return {
+      isSite: view === 'site', isAdmin: view === 'admin', goAdmin: this.goAdmin, goSite: this.goSite,
+      waLinkGeneral,
+      search, origin, condition, onSearch: this.onSearch, onOrigin: this.onOrigin, onCondition: this.onCondition,
+      quickFilterJapanese: this.quickFilter('Japanese', ''), quickFilterKorean: this.quickFilter('Korean', ''),
+      quickFilterNew: this.quickFilter('', 'New'), quickFilterUsed: this.quickFilter('', 'Used'),
+      filteredProducts, resultCount: filteredProducts.length, totalCount: products.length, noResults: filteredProducts.length === 0,
+      brandsDoubled,
+      modal: modalVals,
+      stats: { revenueFmt: this.fmt(orders.reduce((s,o)=>s+o.amount,0)), productCount: products.length, orderCount: orders.length },
+      adminOrders, noOrders: adminOrders.length === 0, hasOrders: adminOrders.length > 0,
+      adminForm: this.state.adminForm, adminFormError: this.state.adminFormError,
+      setAdminName: this.setAdminName, setAdminMake: this.setAdminMake, setAdminModel: this.setAdminModel, setAdminYear: this.setAdminYear,
+      setAdminOrigin: this.setAdminOrigin, setAdminCondition: this.setAdminCondition, setAdminRetail: this.setAdminRetail, setAdminFloor: this.setAdminFloor,
+      onAddPart: this.onAddPart,
+      adminProducts,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
