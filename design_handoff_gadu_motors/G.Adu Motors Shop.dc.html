@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-3c25f5d8-2fab-413c-ad62-0cd43737cfad/styles.css">
+<script src="_ds/modernist-3c25f5d8-2fab-413c-ad62-0cd43737cfad/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)}
+a{color:var(--color-accent)}a:hover{color:var(--color-accent-700)}
+.gx{display:grid;gap:0}
+@media (max-width:860px){.desk{display:none!important}.stack{grid-template-columns:1fr!important}.two{grid-template-columns:1fr!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg)">
+
+  <sc-if value="{{ toastOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:16px;right:16px;z-index:100;display:flex;gap:10px;align-items:flex-start;max-width:340px;background:var(--color-text);color:var(--color-bg);border-left:4px solid var(--color-accent);padding:14px 16px;box-shadow:var(--shadow-lg)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" style="flex:none;margin-top:1px"><path d="m5 13 4 4L19 7"></path></svg>
+      <div style="flex:1">
+        <div style="font:800 13px/1.3 var(--font-heading)">Order received</div>
+        <div style="font-size:12px;opacity:.8;margin-top:2px">{{ toastBody }}</div>
+      </div>
+      <button onClick="{{ closeToast }}" style="background:none;border:0;color:inherit;opacity:.6;cursor:pointer;font-size:16px;line-height:1;padding:0" style-hover="opacity:1">×</button>
+    </div>
+  </sc-if>
+
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2px;padding:6px 16px;background:var(--color-text);color:var(--color-bg);font:600 10px/1 var(--font-heading);letter-spacing:.1em;text-transform:uppercase">
+    <span style="margin-right:12px;opacity:.55">Prototype</span>
+    <sc-for list="{{ screens }}" as="s" hint-placeholder-count="8">
+      <button onClick="{{ s.go }}" style="{{ s.style }}" style-hover="opacity:1">{{ s.label }}</button>
+    </sc-for>
+    <label style="margin-left:auto;display:flex;align-items:center;gap:8px;cursor:pointer;font:600 10px/1 var(--font-heading);letter-spacing:.1em">
+      <span style="opacity:.6">Low-data mode</span>
+      <span style="{{ lowDataPill }}"><span style="{{ lowDataKnob }}"></span></span>
+      <input type="checkbox" checked="{{ lowData }}" onChange="{{ toggleLowData }}" style="position:absolute;opacity:0;width:0;height:0">
+    </label>
+  </div>
+
+  
+
+  <!-- ═══════════════ HOME ═══════════════ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--color-divider)">
+      <span style="font:400 11px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">Storefront layout</span>
+      <div class="seg">
+        <label class="seg-opt"><input type="radio" name="hv" checked="{{ homeA }}" onChange="{{ setHomeA }}"><span>A · Counter</span></label>
+        <label class="seg-opt"><input type="radio" name="hv" checked="{{ homeB }}" onChange="{{ setHomeB }}"><span>B · Poster</span></label>
+        <label class="seg-opt"><input type="radio" name="hv" checked="{{ homeC }}" onChange="{{ setHomeC }}"><span>C · Ledger</span></label>
+      </div>
+      <span style="font:400 12px/1.4 var(--font-body);color:var(--color-neutral-600)">{{ homeNote }}</span>
+    </div>
+
+    <!-- A · Trade counter -->
+    <sc-if value="{{ homeA }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div class="two" style="display:grid;grid-template-columns:380px 1fr">
+        <div style="padding:28px 24px;border-right:2px solid var(--color-divider)">
+          <h6 style="margin:0 0 10px;color:var(--color-accent)">Fitment first</h6>
+          <h2 style="font-size:30px;margin:0 0 6px">Tell us the car.<br>We pull the part.</h2>
+          <p style="font-size:13px;color:var(--color-neutral-700);margin-bottom:18px">Every price below is confirmed against your chassis. No guessing at the counter.</p>
+          <div style="display:grid;gap:10px">
+            <div class="field"><label>Make</label><select class="input" value="{{ fitMake }}" onChange="{{ setMake }}">
+              <option>Toyota</option><option>Nissan</option><option>Hyundai</option><option>Kia</option></select></div>
+            <div class="field"><label>Model</label><select class="input" value="{{ fitModel }}" onChange="{{ setModel }}">
+              <sc-for list="{{ modelOptions }}" as="m" hint-placeholder-count="4"><option>{{ m }}</option></sc-for></select></div>
+            <div class="field"><label>Part</label><select class="input" value="{{ fitPart }}" onChange="{{ setPart }}"><option>Any part</option><option>Gearbox</option><option>Engine</option><option>Radiator</option><option>Alternator</option><option>Brake pads</option></select></div>
+            <div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div class="field"><label>Year</label><select class="input" value="{{ fitYear }}" onChange="{{ setYear }}"><option>2015</option><option>2016</option><option>2017</option><option>2018</option></select></div>
+              <div class="field"><label>Engine</label><select class="input"><option>2ZR-FE 1.8</option><option>1NZ-FE 1.5</option></select></div>
+            </div>
+            <button class="btn btn-primary btn-block" onClick="{{ goResults }}" style="justify-content:space-between;padding:11px 14px">
+              <span>Search 2,480 parts in stock</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </button>
+            <button class="btn btn-secondary btn-block" onClick="{{ goFinder }}" style="justify-content:flex-start;padding:11px 14px">Or use chassis / VIN &amp; photo lookup</button>
+          </div>
+          <hr class="hr">
+          <div style="display:grid;gap:12px">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" style="flex:none;margin-top:2px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <div><div style="font:800 13px/1.3 var(--font-heading)">Verified yards only</div><div style="font-size:12px;color:var(--color-neutral-700)">Abossey Okai &amp; Suame sellers rated by real fitters.</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" style="flex:none;margin-top:2px"><rect x="1" y="3" width="15" height="13"></rect><path d="M16 8h4l3 3v5h-7z"></path><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              <div><div style="font:800 13px/1.3 var(--font-heading)">Same-day rider in Accra</div><div style="font-size:12px;color:var(--color-neutral-700)">Order before 2pm · GH₵ 35 within Greater Accra.</div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="position:relative;border-bottom:2px solid var(--color-divider);background:var(--color-neutral-200)">
+            <sc-if value="{{ showImg }}" hint-placeholder-val="{{ true }}">
+              <div style="height:300px;overflow:hidden" class="grayscale"><img src="assets/gadu-poster.jpg" alt="G.Adu Motors yard" style="width:100%;margin-top:-42%"></div>
+            </sc-if>
+            <sc-if value="{{ lowData }}" hint-placeholder-val="{{ false }}">
+              <div style="height:140px;display:grid;place-items:center;font:400 11px/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">Image off · low-data mode</div>
+            </sc-if>
+            <div style="position:absolute;left:0;bottom:0;background:var(--color-accent);color:var(--color-bg);padding:10px 16px;font:800 13px/1 var(--font-heading);letter-spacing:.04em">NEW &amp; USED JAPANESE ENGINES · IN STOCK TODAY</div>
+          </div>
+          <div style="padding:20px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1px solid var(--color-divider)">
+            <h4 style="margin:0">Moving fast this week</h4>
+            <a onClick="{{ goResults }}" style="cursor:pointer;font-size:13px">See all 2,480 →</a>
+          </div>
+          <div class="stack" style="display:grid;grid-template-columns:repeat(3,1fr)">
+            <sc-for list="{{ featured }}" as="p" hint-placeholder-count="6">
+              <div style="border-right:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);padding:14px 16px;cursor:pointer;background:var(--color-bg)" style-hover="background:var(--color-surface)" onClick="{{ p.open }}">
+                <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px">
+                  <span class="tag tag-neutral">{{ p.condition }}</span>
+                  <span style="font:400 10px/1.6 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">{{ p.sku }}</span>
+                </div>
+                <div style="font:800 15px/1.25 var(--font-heading);margin-bottom:4px">{{ p.name }}</div>
+                <div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:10px">{{ p.fits }}</div>
+                <div style="display:flex;align-items:baseline;justify-content:space-between">
+                  <span style="font:800 18px/1 var(--font-heading)">{{ p.price }}</span>
+                  <span style="font-size:11px;color:var(--color-neutral-600)">{{ p.stock }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- B · Poster -->
+    <sc-if value="{{ homeB }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="background:var(--color-accent);color:var(--color-bg);padding:56px 24px 44px">
+        <div class="two" style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:end">
+          <div>
+            <div style="font:400 11px/1 var(--font-body);letter-spacing:.18em;text-transform:uppercase;opacity:.85;margin-bottom:18px">Suame Magazine · Kumasi · Est. 2004</div>
+            <h1 style="font-size:clamp(44px,8vw,104px);line-height:.92;letter-spacing:-.03em;margin:0 0 20px">THE PART<br>IS ALREADY<br>ON THE SHELF.</h1>
+            <p style="max-width:520px;font-size:15px;opacity:.9;margin-bottom:24px">New &amp; used engines, axles and spare parts for Toyota, Nissan, Hyundai and Kia. Fitment-checked, priced in the open, dispatched the same day.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:10px">
+              <button class="btn" onClick="{{ goFinder }}" style="background:var(--color-bg);color:var(--color-text);padding:12px 18px" style-hover="background:var(--color-neutral-200)">Find my part</button>
+              <button class="btn" onClick="{{ goResults }}" style="border-color:currentColor;color:inherit;padding:12px 18px" style-hover="background:var(--color-accent-600)">Browse catalogue</button>
+            </div>
+          </div>
+          <div style="background:var(--color-bg);color:var(--color-text);padding:20px">
+            <h6 style="margin:0 0 10px;color:var(--color-accent)">Fitment first</h6>
+            <div style="display:grid;gap:10px">
+              <div class="field"><label>Make</label><select class="input" value="{{ fitMake }}" onChange="{{ setMake }}">
+                <option>Toyota</option><option>Nissan</option><option>Hyundai</option><option>Kia</option></select></div>
+              <div class="field"><label>Model</label><select class="input" value="{{ fitModel }}" onChange="{{ setModel }}">
+                <sc-for list="{{ modelOptions }}" as="m" hint-placeholder-count="4"><option>{{ m }}</option></sc-for></select></div>
+              <div class="field"><label>Part</label><select class="input" value="{{ fitPart }}" onChange="{{ setPart }}"><option>Any part</option><option>Gearbox</option><option>Engine</option><option>Radiator</option><option>Alternator</option><option>Brake pads</option></select></div>
+              <div class="field"><label>Year</label><select class="input" value="{{ fitYear }}" onChange="{{ setYear }}"><option>2015</option><option>2016</option><option>2017</option><option>2018</option></select></div>
+              <button class="btn btn-primary btn-block" onClick="{{ goResults }}" style="justify-content:space-between;padding:11px 14px">
+                <span>Search parts for {{ fitLabel }}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+        <div class="stack" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid var(--color-divider)">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="padding:22px 18px 22px 0;border-right:1px solid var(--color-divider)">
+              <div style="font:800 32px/1 var(--font-heading);letter-spacing:-.02em">{{ s.n }}</div>
+              <div style="font-size:12px;color:var(--color-neutral-700);margin-top:6px">{{ s.l }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:28px 0 10px"><h4 style="margin:0">Shop by system</h4></div>
+        <div class="stack" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--color-divider);padding-bottom:2px">
+          <sc-for list="{{ categories }}" as="c" hint-placeholder-count="6">
+            <div onClick="{{ goResults }}" style="background:var(--color-bg);padding:20px 18px;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-height:120px" style-hover="background:var(--color-surface)">
+              <div style="font:800 18px/1.15 var(--font-heading)">{{ c.name }}</div>
+              <div style="font-size:12px;color:var(--color-neutral-700);flex:1">{{ c.blurb }}</div>
+              <div style="font:400 11px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">{{ c.count }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:34px 0 44px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px"><h4 style="margin:0">In stock today</h4><a onClick="{{ goResults }}" style="cursor:pointer;font-size:13px">All parts →</a></div>
+          <div class="stack" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <sc-for list="{{ featured }}" as="p" hint-placeholder-count="6">
+              <div style="border:1px solid var(--color-divider);background:var(--color-surface);cursor:pointer" style-hover="box-shadow:var(--shadow-md)" onClick="{{ p.open }}">
+                <div style="padding:14px 16px">
+                  <div style="font:800 15px/1.25 var(--font-heading);margin-bottom:4px">{{ p.name }}</div>
+                  <div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:10px">{{ p.fits }}</div>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font:800 18px/1 var(--font-heading)">{{ p.price }}</span><span class="tag tag-accent">{{ p.condition }}</span></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- C · Ledger -->
+    <sc-if value="{{ homeC }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1180px;margin:0 auto;padding:24px">
+      <div class="two" style="display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start">
+        <div>
+          <div style="border: 2px solid var(--color-text); padding: 16px; width: 778px; height: 272px">
+            <h6 style="margin:0 0 10px">Narrow by vehicle</h6>
+            <div style="display:grid;gap:8px">
+              <select class="input" value="{{ fitMake }}" onChange="{{ setMake }}"><option>Toyota</option><option>Nissan</option><option>Hyundai</option><option>Kia</option></select>
+              <select class="input" value="{{ fitModel }}" onChange="{{ setModel }}"><sc-for list="{{ modelOptions }}" as="m" hint-placeholder-count="4"><option>{{ m }}</option></sc-for></select>
+              <select class="input" value="{{ fitPart }}" onChange="{{ setPart }}"><option>Any part</option><option>Gearbox</option><option>Engine</option><option>Radiator</option><option>Alternator</option><option>Brake pads</option></select>
+              <select class="input" value="{{ fitYear }}" onChange="{{ setYear }}"><option>2015</option><option>2016</option><option>2017</option></select>
+              <button class="btn btn-primary btn-block" onClick="{{ goResults }}" style="justify-content:flex-start">Apply fitment filter</button>
+            </div>
+          </div>
+          <div style="border-bottom:2px solid var(--color-divider);padding-bottom:14px;margin-bottom:0">
+            <h6 style="margin: 0 0 8px; color: var(--color-accent); width: 797px; height: 49px">Live stock ledger · updated 08:12 GMT</h6><h2 style="margin:0">Everything on the floor, in one list.</h2>
+            
+          </div><table class="table">
+            <thead><tr><th>Part</th><th>Fits</th><th>Cond.</th><th>Yard</th><th style="text-align:right">Price</th><th></th></tr></thead>
+            <tbody>
+              <sc-for list="{{ ledger }}" as="p" hint-placeholder-count="8">
+                <tr style="cursor:pointer" onClick="{{ p.open }}">
+                  <td style="font-weight:600">{{ p.name }}</td>
+                  <td style="font-size:12px;color:var(--color-neutral-700)">{{ p.fits }}</td>
+                  <td><span class="tag tag-neutral">{{ p.condition }}</span></td>
+                  <td style="font-size:12px">{{ p.yard }}</td>
+                  <td style="text-align:right;font-weight:600">{{ p.price }}</td>
+                  <td style="text-align:right"><span style="color:var(--color-accent);font-size:12px">Open →</span></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--color-divider)">
+                  <td colSpan="6" onClick="{{ stop }}" style="padding:0 0 12px;cursor:default">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span style="font:400 10px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">Negotiate · floor {{ p.negFloor }}</span>
+                      <input class="input" type="number" value="{{ p.negValue }}" min="{{ p.negMin }}" max="{{ p.negMax }}" onChange="{{ p.negSet }}" style="height:30px;font-size:12px;width:90px">
+                      <button class="btn btn-secondary" onClick="{{ p.negSend }}" style="font-size:11px;padding:0 10px">Send offer</button>
+                    </div>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <div style="position:sticky;top:80px;display:grid;gap:16px">
+          
+          <div style="background:var(--color-surface);padding:16px">
+            <h6 style="margin:0 0 8px;color:var(--color-accent)">Trade account</h6>
+            <p style="font-size:13px;margin-bottom:10px">Resellers at Abossey Okai and Suame get bulk pricing, 14-day terms and a dedicated dispatch lane.</p>
+            <button class="btn btn-secondary btn-block" onClick="{{ goAdmin }}" style="justify-content:flex-start">Open trade dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- ═══════════════ FIT FINDER ═══════════════ -->
+  <sc-if value="{{ isFinder }}" hint-placeholder-val="{{ false }}">
+  <header style="display:flex;align-items:center;gap:20px;padding:12px 16px;border-bottom:2px solid var(--color-divider);background:var(--color-bg);position:sticky;top:0;z-index:20">
+    <div style="display:flex;align-items:center;gap:10px;margin-right:auto;cursor:pointer" onClick="{{ goHome }}">
+      <div style="width:38px;height:38px;overflow:hidden;position:relative;flex:none;border:1px solid var(--color-divider)">
+        <img src="assets/gadu-poster.jpg" alt="G.Adu Motors" style="position:absolute;width:204px;max-width:none;left:-89px;top:-11px">
+      </div>
+      <div style="line-height:1">
+        <div style="font:800 17px/1 var(--font-heading);letter-spacing:-.02em">G.ADU MOTORS</div>
+        <div style="font:400 10px/1.4 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600);margin-top:3px">Engines · Axles · Spare Parts</div>
+      </div>
+    </div>
+    <div class="desk" style="display:flex;align-items:center;gap:8px;flex:1;max-width:420px">
+      <input class="input" placeholder="Search part name, OEM number or casting code" value="{{ headerQuery }}" onChange="{{ setHeaderQuery }}" onKeyDown="{{ onHeaderSearchKey }}" style="height:36px">
+      <button class="btn btn-secondary btn-icon" onClick="{{ runHeaderSearch }}" title="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      </button>
+    </div>
+    <nav class="desk" style="display:flex;align-items:center;gap:22px;font:400 14px/1 var(--font-body)">
+      <a onClick="{{ goResults }}" style="cursor:pointer;color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">Catalogue</a>
+      <a onClick="{{ goFinder }}" style="cursor:pointer;color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">Find my part</a>
+      <a onClick="{{ goTrack }}" style="cursor:pointer;color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">Track order</a>
+      <a onClick="{{ goChat }}" style="cursor:pointer;color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">Chat</a>
+    </nav>
+    <button class="btn btn-secondary" onClick="{{ goCart }}" style="gap:8px">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+      <span>{{ cartCount }}</span>
+    </button>
+  </header><div style="max-width:1180px;margin:0 auto;padding:28px 24px 60px">
+    <h6 style="color:var(--color-accent);margin:0 0 8px">Fit finder · three routes to the same part</h6>
+    <h2 style="margin:0 0 6px">How do you know the car?</h2>
+    <p style="font-size:13px;color:var(--color-neutral-700);max-width:620px">Most buyers know the model. Fitters know the chassis. Everyone can photograph the old part. All three land on the same fitment-verified result set.</p>
+    <hr class="hr">
+    <div class="stack" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--color-divider)">
+
+      <div style="background:var(--color-bg);padding:20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="width:22px;height:22px;background:var(--color-accent);color:var(--color-bg);display:grid;place-items:center;font:800 12px/1 var(--font-heading)">1</span><span style="font:800 15px/1 var(--font-heading)">Make · Model · Year · Part</span></div>
+        <p style="font-size:12px;color:var(--color-neutral-700)">For the everyday owner. Four taps, no paperwork. E.g. gearbox.</p>
+        <div style="display:grid;gap:8px;margin-top:6px">
+          <div class="field"><label>Make</label><select class="input" value="{{ fitMake }}" onChange="{{ setMake }}"><option>Toyota</option><option>Nissan</option><option>Hyundai</option><option>Kia</option></select></div>
+          <div class="field"><label>Model</label><select class="input" value="{{ fitModel }}" onChange="{{ setModel }}"><sc-for list="{{ modelOptions }}" as="m" hint-placeholder-count="4"><option>{{ m }}</option></sc-for></select></div>
+          <div class="field"><label>Year</label><select class="input" value="{{ fitYear }}" onChange="{{ setYear }}"><option>2013</option><option>2015</option><option>2017</option><option>2019</option></select></div>
+          <div class="field"><label>Part</label><select class="input" value="{{ fitPart }}" onChange="{{ setPart }}"><option>Any part</option><option>Gearbox</option><option>Engine</option><option>Radiator</option><option>Alternator</option><option>Brake pads</option><option>Axle</option></select></div>
+          <button class="btn btn-primary btn-block" onClick="{{ goResults }}" style="justify-content:flex-start">Show parts for {{ fitLabel }}</button>
+        </div>
+      </div>
+
+      <div style="background:var(--color-bg);padding:20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="width:22px;height:22px;background:var(--color-accent);color:var(--color-bg);display:grid;place-items:center;font:800 12px/1 var(--font-heading)">3</span><span style="font:800 15px/1 var(--font-heading)">Photograph the old part</span></div>
+        <p style="font-size:12px;color:var(--color-neutral-700)">When nobody knows the name of it. Snap the casting number; a counter agent replies in the thread.</p>
+        <div style="border:2px dashed var(--color-divider);padding:26px 16px;display:grid;place-items:center;gap:8px;text-align:left;margin-top:6px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-600)" stroke-width="1.6"><path d="M14.5 4h-5L7 7H4v13h16V7h-3z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <div style="font:400 11px/1.4 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">Tap to take a photo</div>
+        </div>
+        <div style="font-size:12px;color:var(--color-neutral-700);margin-top:10px">Typical reply time at the counter: <strong>under 6 minutes</strong>, 7am–6pm.</div>
+        <button class="btn btn-secondary btn-block" onClick="{{ goChat }}" style="justify-content:flex-start">Send to the counter thread</button>
+      </div><div style="background:var(--color-bg);padding:20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="width:22px;height:22px;background:var(--color-accent);color:var(--color-bg);display:grid;place-items:center;font:800 12px/1 var(--font-heading)">2</span><span style="font:800 15px/1 var(--font-heading)">Chassis / VIN</span></div>
+        <p style="font-size:12px;color:var(--color-neutral-700)">The fitter's route. Decodes the exact trim, engine code and gearbox — no wrong axle.</p>
+        <div class="field" style="margin-top:6px"><label>Chassis number</label><input class="input" value="{{ vin }}" onChange="{{ setVin }}" placeholder="NZE141-1234567" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:.06em"></div>
+        <sc-if value="{{ vinDecoded }}" hint-placeholder-val="{{ false }}">
+          <div style="border-left:2px solid var(--color-accent);padding:10px 12px;background:var(--color-accent-100);margin-top:10px">
+            <div style="font:800 12px/1.3 var(--font-heading);margin-bottom:4px">Toyota Corolla NZE141 · 2013</div>
+            <div style="font-size:12px;color:var(--color-accent-800)">1NZ-FE 1.5 petrol · CVT K310 · RHD import (JP)</div>
+          </div>
+        </sc-if>
+        <button class="btn btn-secondary btn-block" onClick="{{ decodeVin }}" style="justify-content:flex-start">Decode chassis</button>
+        <sc-if value="{{ vinDecoded }}" hint-placeholder-val="{{ false }}">
+          <button class="btn btn-primary btn-block" onClick="{{ goResults }}" style="justify-content:flex-start">Show 214 matching parts</button>
+        </sc-if>
+      </div>
+
+      
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ═══════════════ RESULTS ═══════════════ -->
+  <sc-if value="{{ isResults }}" hint-placeholder-val="{{ false }}">
+  <div class="two" style="display:grid;grid-template-columns:250px 1fr;max-width:1400px;margin:0 auto">
+    <aside style="border-right:1px solid var(--color-divider);padding:20px 18px">
+      <div style="border:2px solid var(--color-text);padding:12px;margin-bottom:18px">
+        <div style="font:400 10px/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px">Fitted to</div>
+        <div style="font:800 14px/1.2 var(--font-heading)">{{ fitLabel }}</div>
+        <a onClick="{{ goFinder }}" style="cursor:pointer;font-size:12px">Change vehicle</a>
+      </div>
+      <h6 style="margin:0 0 10px">Condition</h6>
+      <div style="display:grid;gap:8px;margin-bottom:18px">
+        <label class="radio"><input type="radio" name="cond" defaultChecked="{{ true }}"><span class="dot"></span>All</label>
+        <label class="radio"><input type="radio" name="cond"><span class="dot"></span>New OEM</label>
+        <label class="radio"><input type="radio" name="cond"><span class="dot"></span>Used JP import</label>
+        <label class="radio"><input type="radio" name="cond"><span class="dot"></span>Aftermarket</label>
+      </div>
+      <h6 style="margin:0 0 10px">Yard</h6>
+      <div style="display:grid;gap:8px;margin-bottom:18px">
+        <label class="radio"><input type="radio" name="yard" defaultChecked="{{ true }}"><span class="dot"></span>All verified yards</label>
+        
+        <label class="radio"><input type="radio" name="yard"><span class="dot"></span>Suame Magazine</label>
+      </div>
+      <h6 style="margin:0 0 10px">Seller rating</h6>
+      <div class="seg" style="width:100%">
+        <label class="seg-opt" style="flex:1"><input type="radio" name="rate" defaultChecked="{{ true }}"><span>Any</span></label>
+        <label class="seg-opt" style="flex:1"><input type="radio" name="rate"><span>4.0+</span></label>
+        <label class="seg-opt" style="flex:1"><input type="radio" name="rate"><span>4.5+</span></label>
+      </div>
+    </aside>
+    <section style="padding:20px 24px 60px">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px">
+        <input class="input" placeholder="Search part name, OEM number or casting code" value="{{ headerQuery }}" onChange="{{ setHeaderQuery }}" onKeyDown="{{ onHeaderSearchKey }}" style="flex:1;min-width:220px">
+        <button class="btn btn-primary" onClick="{{ runHeaderSearch }}">Search</button>
+      </div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--color-divider);padding-bottom:10px;margin-bottom:0">
+        <div style="font:800 16px/1 var(--font-heading)">{{ resultCount }} parts {{ resultQualifier }}</div>
+        <div style="font-size:12px;color:var(--color-neutral-600)">Sorted by yard distance, then price</div>
+      </div>
+      <div>
+        <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
+          <div class="two" style="display:grid;grid-template-columns:150px 1fr auto;gap:18px;padding:16px 0;border-bottom:1px solid var(--color-divider);cursor:pointer;align-items:start" style-hover="background:color-mix(in srgb, var(--color-text) 3%, transparent)" onClick="{{ p.open }}">
+            <div style="aspect-ratio:4/3;background:var(--color-neutral-200);border:1px solid var(--color-divider);display:grid;place-items:center;text-align:center;padding:8px">
+              <span style="font:400 9px/1.4 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600)">{{ p.imgLabel }}</span>
+            </div>
+            <div>
+              <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px">
+                <span class="tag tag-accent">{{ p.condition }}</span>
+                <span style="font:400 10px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">{{ p.sku }}</span>
+              </div>
+              <div style="font:800 17px/1.2 var(--font-heading);margin-bottom:4px">{{ p.name }}</div>
+              <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:8px">{{ p.fits }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:12px">
+                <span style="display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><strong>{{ p.yard }}</strong></span>
+                <span>★ {{ p.rating }} · {{ p.reviews }} fitter reviews</span>
+                <span style="color:var(--color-neutral-600)">{{ p.warranty }}</span>
+              </div>
+            </div>
+            <div style="text-align:right;display:grid;gap:8px;justify-items:end;min-width:190px">
+              <div style="font:800 21px/1 var(--font-heading)">{{ p.price }}</div>
+              <div style="font-size:11px;color:var(--color-neutral-600)">{{ p.stock }}</div>
+              <button class="btn btn-secondary" onClick="{{ p.add }}">Add to order</button>
+              <div onClick="{{ stop }}" style="width:100%;display:grid;gap:4px;border-top:1px solid var(--color-divider);padding-top:8px;margin-top:2px">
+                <div style="font:400 10px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);text-align:left">Negotiate · floor {{ p.negFloor }}</div>
+                <div style="display:flex;gap:6px">
+                  <input class="input" type="number" value="{{ p.negValue }}" min="{{ p.negMin }}" max="{{ p.negMax }}" onChange="{{ p.negSet }}" style="height:32px;font-size:12px;width:90px">
+                  <button class="btn btn-secondary" onClick="{{ p.negSend }}" style="font-size:11px;padding:0 10px">Send offer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ═══════════════ PDP ═══════════════ -->
+  <sc-if value="{{ isPdp }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1180px;margin:0 auto;padding:18px 24px 60px">
+    <div style="font-size:12px;color:var(--color-neutral-600);margin-bottom:14px"><a onClick="{{ goResults }}" style="cursor:pointer">Catalogue</a> · Engine &amp; drivetrain · {{ pdp.name }}</div>
+    <div class="two" style="display:grid;grid-template-columns:1fr 400px;gap:36px;align-items:start">
+      <div>
+        <div style="aspect-ratio:16/10;background:var(--color-neutral-200);border:1px solid var(--color-divider);display:grid;place-items:center;text-align:center">
+          <span style="font:400 11px/1.6 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">{{ pdp.imgLabel }}<br>Photo placeholder</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px">
+          <div style="aspect-ratio:1;background:var(--color-neutral-200);border:2px solid var(--color-text)"></div>
+          <div style="aspect-ratio:1;background:var(--color-neutral-200);border:1px solid var(--color-divider)"></div>
+          <div style="aspect-ratio:1;background:var(--color-neutral-200);border:1px solid var(--color-divider)"></div>
+          <div style="aspect-ratio:1;background:var(--color-neutral-200);border:1px solid var(--color-divider)"></div>
+        </div>
+        <hr class="hr">
+        <h4>Specification</h4>
+        <table class="table">
+          <tbody>
+            <sc-for list="{{ pdpSpecs }}" as="s" hint-placeholder-count="6">
+              <tr><td style="width:200px;color:var(--color-neutral-700)">{{ s.k }}</td><td style="font-weight:600">{{ s.v }}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+        <hr class="hr">
+        <h4>Fitment</h4>
+        <div style="display:flex;gap:10px;align-items:flex-start;border-left:2px solid var(--color-accent);background:var(--color-accent-100);padding:12px 14px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.2" style="flex:none;margin-top:1px"><path d="m5 13 4 4L19 7"></path></svg>
+          <div><div style="font:800 14px/1.3 var(--font-heading);color:var(--color-accent-800)">Confirmed fit for {{ fitLabel }}</div><div style="font-size:12px;color:var(--color-accent-800);margin-top:2px">Also fits: Corolla Fielder NZE141 · Corolla Axio 2012–2016 · Allion 2013–2015.</div></div>
+        </div>
+      </div>
+      <div style="position:sticky;top:80px;display:grid;gap:14px">
+        <div>
+          <span class="tag tag-accent" style="margin-bottom:10px">{{ pdp.condition }}</span>
+          <h2 style="margin:10px 0 4px;font-size:27px">{{ pdp.name }}</h2>
+          <div style="font-size:13px;color:var(--color-neutral-700)">{{ pdp.fits }} · {{ pdp.sku }}</div>
+        </div>
+        <div style="border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider);padding:14px 0">
+          <div style="font:800 34px/1 var(--font-heading);letter-spacing:-.02em">{{ pdp.price }}</div>
+          <div style="font-size:12px;color:var(--color-neutral-600);margin-top:6px">Includes 12.5% VAT. Room to negotiate down to {{ pdp.negFloor }} — no lower.</div>
+        </div>
+        <div style="border:1px solid var(--color-divider);padding:12px 14px;display:grid;gap:8px">
+          <div style="font:400 10px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">Negotiate · floor {{ pdp.negFloor }}</div>
+          <div style="display:flex;gap:8px">
+            <input class="input" type="number" value="{{ pdpNegValue }}" min="{{ pdp.negMin }}" max="{{ pdp.negMax }}" onChange="{{ setPdpNeg }}" style="flex:1">
+            <button class="btn btn-secondary" onClick="{{ sendPdpOffer }}">Send offer</button>
+          </div>
+        </div>
+        <div style="border:1px solid var(--color-divider);padding:14px;background:var(--color-surface)">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:38px;height:38px;background:var(--color-text);color:var(--color-bg);display:grid;place-items:center;font:800 14px/1 var(--font-heading);flex:none">GA</div>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:6px"><span style="font:800 14px/1.2 var(--font-heading)">{{ pdp.yard }}</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--color-accent)" stroke="var(--color-bg)" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></div>
+              <div style="font-size:12px;color:var(--color-neutral-700)">★ {{ pdp.rating }} · {{ pdp.reviews }} reviews · 9 yrs trading</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-secondary" onClick="{{ goChat }}" style="flex:1;justify-content:flex-start">Chat with yard</button>
+            <button class="btn btn-secondary" style="flex:1;justify-content:flex-start">Call 024 431 8890</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="seg">
+            <label class="seg-opt"><input type="radio" name="qty" defaultChecked="{{ true }}"><span>1</span></label>
+            <label class="seg-opt"><input type="radio" name="qty"><span>2</span></label>
+            <label class="seg-opt"><input type="radio" name="qty"><span>3+</span></label>
+          </div>
+          <span style="font-size:12px;color:var(--color-neutral-600)">{{ pdp.stock }}</span>
+        </div>
+        <button class="btn btn-primary btn-block" onClick="{{ addPdp }}" style="justify-content:space-between;padding:13px 16px;font-size:15px">
+          <span>Add to order</span><span>{{ pdp.price }}</span>
+        </button>
+        <div style="display:grid;gap:10px;font-size:12px">
+          <div style="display:flex;gap:8px"><strong style="min-width:96px">Delivery</strong><span>Same-day rider, Greater Accra — GH₵ 35. Order before 2pm.</span></div>
+          <div style="display:flex;gap:8px"><strong style="min-width:96px">Pickup</strong><span>Free at Suame Magazine — ready in 40 min.</span></div>
+          <div style="display:flex;gap:8px"><strong style="min-width:96px">Warranty</strong><span>{{ pdp.warranty }} — return to the yard with the receipt.</span></div>
+          <div style="display:flex;gap:8px"><strong style="min-width:96px">Payment</strong><span>MoMo (MTN · Telecel · AT), card, cash on delivery, or pay at shop.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ═══════════════ CART / CHECKOUT ═══════════════ -->
+  <sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+  <div class="two" style="display:grid;grid-template-columns:1fr 360px;gap:36px;max-width:1180px;margin:0 auto;padding:24px 24px 60px;align-items:start">
+    <div>
+      <h2 style="margin:0 0 4px">Your order</h2>
+      <p style="font-size:13px;color:var(--color-neutral-700)">{{ cartCount }} line items from {{ yardCount }} verified yards. Items from different yards dispatch separately.</p>
+      <table class="table" style="margin-top:8px">
+        <thead><tr><th>Part</th><th>Yard</th><th style="text-align:right">Price</th><th></th></tr></thead>
+        <tbody>
+          <sc-for list="{{ cart }}" as="c" hint-placeholder-count="3">
+            <tr>
+              <td><div style="font-weight:600">{{ c.name }}</div><div style="font-size:12px;color:var(--color-neutral-600)">{{ c.fits }} · {{ c.condition }}</div>
+                <div style="display:flex;gap:6px;align-items:center;margin-top:6px">
+                  <span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-600)">Negotiate</span>
+                  <input class="input" type="number" value="{{ c.negValue }}" min="{{ c.negMin }}" max="{{ c.negMax }}" onChange="{{ c.negSet }}" style="height:28px;font-size:12px;width:80px">
+                  <button class="btn btn-secondary" onClick="{{ c.negSend }}" style="font-size:11px;padding:0 8px">Offer</button>
+                  <span style="font-size:10px;color:var(--color-neutral-600)">floor {{ c.negFloor }}</span>
+                </div>
+              </td>
+              <td style="font-size:12px">{{ c.yard }}</td>
+              <td style="text-align:right;font-weight:600">{{ c.price }}</td>
+              <td style="text-align:right"><button class="btn btn-ghost" onClick="{{ c.remove }}" style="font-size:12px">Remove</button></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+      <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:30px 0;text-align:left;color:var(--color-neutral-600)">No parts yet. <a onClick="{{ goResults }}" style="cursor:pointer">Browse the catalogue →</a></div>
+      </sc-if>
+      <hr class="hr">
+      <h4>Fulfilment</h4>
+      <div style="display:grid;gap:10px;margin-bottom:22px">
+        <label class="radio" style="border:1px solid var(--color-divider);padding:12px;align-items:flex-start;background:var(--color-surface)">
+          <input type="radio" name="ful" checked="{{ isRider }}" onChange="{{ setRider }}"><span class="dot" style="margin-top:2px"></span>
+          <span><span style="font:800 14px/1.2 var(--font-heading);display:block">Same-day dispatch rider — Greater Accra</span><span style="font-size:12px;color:var(--color-neutral-700)">Picked up from the yard by 2pm, at your gate before 6pm. GH₵ 35.</span></span>
+        </label>
+        <label class="radio" style="border:1px solid var(--color-divider);padding:12px;align-items:flex-start;background:var(--color-surface)">
+          <input type="radio" name="ful" checked="{{ isPickup }}" onChange="{{ setPickup }}"><span class="dot" style="margin-top:2px"></span>
+          <span><span style="font:800 14px/1.2 var(--font-heading);display:block">Pick up at Suame Magazine</span><span style="font-size:12px;color:var(--color-neutral-700)">Free. Ready in 40 minutes; show the order code at the counter.</span></span>
+        </label>
+      </div>
+      <h4>Payment</h4>
+      <div style="display:grid;gap:10px">
+        <sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="4">
+          <label class="radio" style="border:1px solid var(--color-divider);padding:12px;align-items:flex-start;background:var(--color-surface)">
+            <input type="radio" name="pay" checked="{{ m.on }}" onChange="{{ m.set }}"><span class="dot" style="margin-top:2px"></span>
+            <span><span style="font:800 14px/1.2 var(--font-heading);display:block">{{ m.title }}</span><span style="font-size:12px;color:var(--color-neutral-700)">{{ m.blurb }}</span></span>
+          </label>
+        </sc-for>
+      </div>
+      <sc-if value="{{ isMomo }}" hint-placeholder-val="{{ true }}">
+        <div style="border-left:2px solid var(--color-accent);background:var(--color-accent-100);padding:14px;margin-top:14px">
+          <div class="field" style="max-width:280px"><label>Mobile Money number</label><input class="input" defaultValue="024 431 8890"></div>
+          <div style="font-size:12px;color:var(--color-accent-800);margin-top:8px">You'll get a prompt on your phone. Approve with your MoMo PIN — the yard is only paid once you confirm the part fits.</div>
+        </div>
+      </sc-if>
+    </div>
+    <div style="position:sticky;top:80px;border:2px solid var(--color-text);padding:18px">
+      <h6 style="margin:0 0 12px">Order summary</h6>
+      <div style="display:grid;gap:8px;font-size:13px">
+        <div style="display:flex;justify-content:space-between"><span>Parts ({{ cartCount }})</span><span style="font-weight:600">GH₵ {{ subtotal }}</span></div>
+        <div style="display:flex;justify-content:space-between"><span>Delivery</span><span style="font-weight:600">{{ deliveryFee }}</span></div>
+        <div style="display:flex;justify-content:space-between;color:var(--color-neutral-600)"><span>VAT included</span><span>GH₵ {{ vat }}</span></div>
+      </div>
+      <hr class="hr">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:800 15px/1 var(--font-heading)">Total</span><span style="font:800 26px/1 var(--font-heading)">GH₵ {{ total }}</span></div>
+      <button class="btn btn-primary btn-block" onClick="{{ placeOrder }}" style="justify-content:space-between;padding:13px 16px;margin-top:16px"><span>{{ payCta }}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+      <div style="font-size:11px;color:var(--color-neutral-600);margin-top:10px">Money is held until you confirm the part fits. Wrong part? The yard collects it and refunds within 48 hours.</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ═══════════════ TRACKING ═══════════════ -->
+  <sc-if value="{{ isTrack }}" hint-placeholder-val="{{ false }}">
+  <div class="two" style="display:grid;grid-template-columns:1fr 340px;gap:36px;max-width:1180px;margin:0 auto;padding:24px 24px 60px;align-items:start">
+    <div>
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;border-bottom:2px solid var(--color-divider);padding-bottom:12px">
+        <h2 style="margin:0">Order GA-24817</h2>
+        <span class="tag tag-accent">Rider on the way</span>
+        <span style="margin-left:auto;font-size:12px;color:var(--color-neutral-600)">Placed today, 09:14</span>
+      </div>
+      <div style="margin-top:22px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:26px 1fr;gap:16px">
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <span style="{{ s.dot }}"></span>
+              <span style="{{ s.line }}"></span>
+            </div>
+            <div style="padding-bottom:26px">
+              <div style="font:800 15px/1.2 var(--font-heading)">{{ s.title }}</div>
+              <div style="font-size:13px;color:var(--color-neutral-700);margin-top:3px">{{ s.body }}</div>
+              <div style="font:400 11px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-top:6px">{{ s.time }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:grid;gap:16px;position:sticky;top:80px">
+      <div style="border:2px solid var(--color-text);padding:16px">
+        <h6 style="margin:0 0 10px">Your rider</h6>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div style="width:40px;height:40px;background:var(--color-neutral-300);flex:none"></div>
+          <div><div style="font:800 14px/1.2 var(--font-heading)">Kwabena Mensah</div><div style="font-size:12px;color:var(--color-neutral-700)">★ 4.8 · Okada · GR-4471-22</div></div>
+        </div>
+        <button class="btn btn-primary btn-block" style="justify-content:flex-start">Call rider</button>
+        <button class="btn btn-secondary btn-block" onClick="{{ goChat }}" style="justify-content:flex-start">Message the yard</button>
+        <a href="https://wa.me/233244670602" target="_blank" rel="noopener" class="btn btn-secondary btn-block" style="justify-content:flex-start;gap:8px;text-decoration:none">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5s-.6-1.4-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1s1 2.5 1.1 2.6c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4z"></path><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.3.9.9-3.2-.2-.3C4 14.8 3.6 13.4 3.6 12c0-4.6 3.8-8.4 8.4-8.4s8.4 3.8 8.4 8.4-3.8 8.2-8.4 8.2z"></path></svg>
+          <span>WhatsApp us · 024 467 0602</span>
+        </a>
+      </div>
+      <div style="background:var(--color-surface);padding:16px">
+        <h6 style="margin:0 0 8px;color:var(--color-accent)">On arrival</h6>
+        <p style="font-size:13px;margin:0">Check the casting number against your old part <em>before</em> you release payment. Tap <strong>Confirm fit</strong> only when it is on the car.</p>
+        <button class="btn btn-secondary btn-block" style="justify-content:flex-start">Confirm fit &amp; release payment</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ═══════════════ CHAT ═══════════════ -->
+  <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:820px;margin:0 auto;padding:24px;display:grid;gap:0">
+    <div style="border:1px solid var(--color-divider);background:var(--color-bg)">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:2px solid var(--color-divider)">
+        <div style="width:34px;height:34px;background:var(--color-text);color:var(--color-bg);display:grid;place-items:center;font:800 13px/1 var(--font-heading)">GA</div>
+        <div style="flex:1"><div style="font:800 14px/1.2 var(--font-heading)">G.Adu Motors · Counter 2</div><div style="font-size:11px;color:var(--color-accent)">Online · replies in ~6 min</div></div>
+        <span class="tag tag-outline">Order GA-24817</span>
+      </div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--color-surface);min-height:360px">
+        <sc-for list="{{ messages }}" as="m" hint-placeholder-count="5">
+          <div style="{{ m.row }}">
+            <div style="{{ m.bubble }}">
+              <div style="font-size:13.5px;line-height:1.5">{{ m.text }}</div>
+              <div style="{{ m.timeStyle }}">{{ m.time }}</div>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ offerOpen }}" hint-placeholder-val="{{ true }}">
+          <div style="align-self:flex-start;max-width:78%;border:2px solid var(--color-accent);background:var(--color-bg);padding:12px 14px">
+            <div style="font:400 10px/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin-bottom:6px">Quote from the counter</div>
+            <div style="font:800 15px/1.25 var(--font-heading)">Toyota 1NZ-FE alternator, used JP</div>
+            <div style="font-size:12px;color:var(--color-neutral-700);margin:2px 0 8px">Tested on the bench · 30-day warranty · in stock, Lane 3</div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font:800 22px/1 var(--font-heading)">GH₵ 640</span>
+              <button class="btn btn-primary" onClick="{{ acceptOffer }}">Accept &amp; add to order</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;gap:8px;padding:12px 14px;border-top:2px solid var(--color-divider)">
+        <button class="btn btn-secondary btn-icon" title="Send a photo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 4h-5L7 7H4v13h16V7h-3z"></path><circle cx="12" cy="13" r="3.6"></circle></svg>
+        </button>
+        <input class="input" placeholder="Type a message…" value="{{ draft }}" onChange="{{ setDraft }}" onKeyDown="{{ onKey }}" style="flex:1">
+        <button class="btn btn-primary" onClick="{{ send }}">Send</button>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--color-neutral-600);margin-top:12px">Photos compress to 40 KB before sending — the thread still works on a 2G connection.</p>
+  </div>
+  </sc-if>
+
+  <!-- ═══════════════ DASHBOARD ═══════════════ -->
+  <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1400px;margin:0 auto;padding:24px 24px 60px">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;border-bottom:2px solid var(--color-divider);padding-bottom:14px">
+      <h2 style="margin:0">Yard dashboard</h2>
+      <span style="font-size:13px;color:var(--color-neutral-700)">G.Adu Motors · Suame Magazine</span>
+      <button class="btn btn-primary" onClick="{{ toggleAddPart }}" style="margin-left:auto">{{ addPartCta }}</button>
+    </div>
+    <p style="font-size:13px;color:var(--color-neutral-700);max-width:640px;margin:12px 0 0">{{ adminDescription }}</p>
+    <sc-if value="{{ addPartOpen }}" hint-placeholder-val="{{ false }}">
+      <div class="two" style="display:grid;grid-template-columns:220px 1fr;gap:24px;padding:20px 0;border-bottom:2px solid var(--color-divider)">
+        <image-slot id="admin-new-part" shape="rect" placeholder="Drop part photo" style="width:220px;height:165px"></image-slot>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+          <div class="field"><label>Part name</label><input class="input" placeholder="e.g. Toyota 2ZR-FE radiator" value="{{ newPartName }}" onChange="{{ setNewPartName }}"></div>
+          <div class="field"><label>Category</label><select class="input" value="{{ newPartCategory }}" onChange="{{ setNewPartCategory }}">
+            <option>Engine</option><option>Transmission</option><option>Brakes</option><option>Suspension</option><option>Electrical</option><option>Cooling</option><option>Body</option><option>Other</option></select></div>
+          <div class="field"><label>Make</label><input class="input" value="{{ newPartMake }}" onChange="{{ setNewPartMake }}"></div>
+          <div class="field"><label>Model</label><select class="input" value="{{ newPartModel }}" onChange="{{ setNewPartModel }}">
+            <sc-for list="{{ newPartModelOptions }}" as="m" hint-placeholder-count="4"><option>{{ m }}</option></sc-for></select></div>
+          <div class="field"><label>Year</label><select class="input" value="{{ newPartYear }}" onChange="{{ setNewPartYear }}">
+            <option>2010</option><option>2012</option><option>2014</option><option>2016</option><option>2018</option><option>2020</option><option>2022</option></select></div>
+          <div class="field"><label>Condition</label><select class="input" value="{{ newPartCondition }}" onChange="{{ setNewPartCondition }}">
+            <option>New OEM</option><option>Used JP</option><option>Aftermarket</option><option>Refurbished</option></select></div>
+          <div class="field"><label>SKU</label><input class="input" value="{{ newPartSkuDisplay }}" onChange="{{ setNewPartSku }}"></div>
+          <div class="field"><label>Quantity in stock</label><input class="input" type="number" min="0" value="{{ newPartQty }}" onChange="{{ setNewPartQty }}"></div>
+          <div class="field"><label>Yard / location</label><select class="input" value="{{ newPartYard }}" onChange="{{ setNewPartYard }}">
+            <option>Block A</option><option>Block B</option><option>Block C</option><option>Lane 3</option><option>Lane 7</option></select></div>
+          <div class="field"><label>Warranty</label><input class="input" placeholder="e.g. 30 days" value="{{ newPartWarranty }}" onChange="{{ setNewPartWarranty }}"></div>
+          <div class="field"><label>List price (GH₵)</label><input class="input" type="number" value="{{ newPartPrice }}" onChange="{{ setNewPartPrice }}"></div>
+          <div class="field">
+            <label>Minimum negotiable price (GH₵)</label>
+            <input class="input" type="number" value="{{ newPartFloor }}" onChange="{{ setNewPartFloor }}">
+            <div style="font-size:11px;color:var(--color-neutral-600);margin-top:4px">Buyers can't offer below this. {{ newPartFloorPct }} of list price.</div>
+          </div>
+          <button class="btn btn-primary" onClick="{{ saveNewPart }}" style="grid-column:1 / -1;justify-self:start">Save to stock</button>
+        </div>
+      </div>
+    </sc-if>
+    <div class="stack" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid var(--color-divider)">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+        <div style="padding:20px 20px 20px 0;border-right:1px solid var(--color-divider)">
+          <div style="font:400 10px/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600)">{{ k.l }}</div>
+          <div style="font:800 30px/1.1 var(--font-heading);margin-top:8px">{{ k.n }}</div>
+          <div style="font-size:12px;color:var(--color-accent);margin-top:4px">{{ k.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div class="two" style="display:grid;grid-template-columns:1fr 340px;gap:32px;padding-top:22px;align-items:start">
+      <div>
+        <h4>Orders needing action</h4>
+        <table class="table">
+          <thead><tr><th>Order</th><th>Part</th><th>Buyer</th><th>Fulfilment</th><th>Status</th><th style="text-align:right">Value</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ orders }}" as="o" hint-placeholder-count="6">
+              <tr>
+                <td style="font-family:ui-monospace,Menlo,monospace;font-size:12px">{{ o.id }}<div style="font-size:10px;color:var(--color-neutral-600);margin-top:2px">Inquiries: 0244670601</div></td>
+                <td style="font-weight:600">{{ o.part }}</td>
+                <td style="font-size:12px">{{ o.buyer }}</td>
+                <td style="font-size:12px;color:var(--color-neutral-700)">{{ o.ful }}</td>
+                <td><span style="{{ o.tagClass }}" class="tag">{{ o.status }}</span></td>
+                <td style="text-align:right;font-weight:600">{{ o.value }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+        <hr class="hr">
+        <h4>How parts are listed</h4>
+        <p style="font-size:13px;color:var(--color-neutral-700);max-width:720px">Every part on the shelf is logged with condition (New OEM, Used JP import, or Aftermarket), the casting or OEM number, confirmed fitment, and a warranty term before it goes live. Used JP imports are bench-tested and photographed at the counter; aftermarket parts are flagged clearly so buyers can choose. Prices are fixed at listing — the negotiation floor above sets how far a counter agent can go on a quote.</p>
+        <hr class="hr">
+        <h4>Low stock</h4>
+        <table class="table">
+          <thead><tr><th>Part</th><th>Fits</th><th style="text-align:right">On shelf</th><th style="text-align:right">Sold / 30d</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ lowStock }}" as="s" hint-placeholder-count="4">
+              <tr><td style="font-weight:600">{{ s.name }}</td><td style="font-size:12px;color:var(--color-neutral-700)">{{ s.fits }}</td><td style="text-align:right;color:var(--color-accent);font-weight:600">{{ s.left }}</td><td style="text-align:right">{{ s.sold }}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:grid;gap:16px">
+        <div style="border:2px solid var(--color-text);padding:16px">
+          <h6 style="margin:0 0 10px">Yard rating</h6>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="font:800 40px/1 var(--font-heading)">4.9</span><span style="font-size:12px;color:var(--color-neutral-700)">from 312 fitter reviews</span></div>
+          <div style="display:grid;gap:6px;margin-top:14px">
+            <sc-for list="{{ ratingBars }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+                <span style="width:96px;color:var(--color-neutral-700)">{{ r.l }}</span>
+                <span style="flex:1;height:6px;background:var(--color-neutral-300);display:block"><span style="{{ r.fill }}"></span></span>
+                <span style="width:28px;text-align:right;font-weight:600">{{ r.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background:var(--color-surface);padding:16px">
+          <h6 style="margin:0 0 8px;color:var(--color-accent)">Counter inbox</h6>
+          <p style="font-size:13px">4 photo enquiries waiting. Median reply 6 min — keep it under 10 to hold the verified badge.</p>
+          <button class="btn btn-secondary btn-block" onClick="{{ goChat }}" style="justify-content:flex-start">Open counter threads</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <footer style="border-top:2px solid var(--color-divider);padding:24px;margin-top:0">
+    <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;font-size:12px;color:var(--color-neutral-700)">
+      <div>G.ADU MOTORS ·&nbsp; Suame Magazine Block C, Kumasi</div>
+      <div>New &amp; used engines, axles &amp; spare parts — Toyota · Nissan · Hyundai · Kia</div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;defaultHomeLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;C&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Storefront&quot;},&quot;negotiationFloorPct&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:80,&quot;min&quot;:50,&quot;max&quot;:95,&quot;step&quot;:5,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Negotiation&quot;},&quot;adminDescription&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Track today's orders, keep stock levels honest, and reply to counter enquiries fast enough to hold the verified badge. Add more description example parts vin etc&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Admin dashboard&quot;}}">
+const MODELS_BY_MAKE = { Toyota:['Corolla','Camry','RAV4','Hilux'], Nissan:['X-Trail','Altima','Patrol','Titan'], Hyundai:['Elantra','Tucson'], Kia:['Rio','Soul'] };
+const CATEGORY_PREFIX = { Engine:'ENG', Transmission:'GBX', Brakes:'BRK', Suspension:'SUS', Electrical:'ELC', Cooling:'RAD', Body:'BDY', Other:'PRT' };
+function skuSuggest(st) {
+  const prefix = CATEGORY_PREFIX[st.newPartCategory] || 'PRT';
+  const makeCode = (st.newPartMake || '').slice(0,3).toUpperCase();
+  const seed = (st.newPartModel || '').length * 37 + (st.newPartYear ? Number(st.newPartYear) : 0);
+  const num = String(100 + (seed % 900));
+  return prefix + '-' + makeCode + '-' + num;
+}
+const CATALOG = [
+  {id:'p1',name:'Toyota 2AZ-FE engine, complete',make:'Toyota',model:'Camry',fits:'Camry ACV40 2007–2011 · RAV4 ACA33',condition:'Used JP',sku:'ENG-2AZ-114',price:8400,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'90-day warranty',stock:'2 on shelf',imgLabel:'Engine assembly'},
+  {id:'p2',name:'Nissan QR25DE cylinder head',make:'Nissan',model:'X-Trail',fits:'X-Trail T31 2008–2013 · Altima L32',condition:'Used JP',sku:'HED-QR25-207',price:2150,yard:'Suame Magazine · Block C',rating:'4.6',reviews:88,warranty:'30-day warranty',stock:'1 on shelf',imgLabel:'Cylinder head'},
+  {id:'p3',name:'Hyundai Elantra front axle pair',make:'Hyundai',model:'Elantra',fits:'Elantra AD 2016–2020',condition:'New OEM',sku:'AXL-ELA-441',price:1280,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'6-month warranty',stock:'6 on shelf',imgLabel:'Drive axle pair'},
+  {id:'p4',name:'Kia Rio alternator 90A',make:'Kia',model:'Rio',fits:'Rio UB 2012–2017 · Soul PS',condition:'Aftermarket',sku:'ALT-RIO-090',price:620,yard:'Abossey Okai · Lane 7',rating:'4.3',reviews:54,warranty:'30-day warranty',stock:'11 on shelf',imgLabel:'Alternator'},
+  {id:'p5',name:'Toyota 2ZR-FE radiator',make:'Toyota',model:'Corolla',fits:'Corolla E140/E170 2009–2018',condition:'New OEM',sku:'RAD-2ZR-018',price:480,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'12-month warranty',stock:'8 on shelf',imgLabel:'Radiator core'},
+  {id:'p6',name:'Nissan VK56 starter motor',make:'Nissan',model:'Patrol',fits:'Patrol Y62 2010–2019 · Titan A60',condition:'Used JP',sku:'STR-VK56-330',price:1950,yard:'Suame Magazine · Block C',rating:'4.6',reviews:88,warranty:'30-day warranty',stock:'3 on shelf',imgLabel:'Starter motor'},
+  {id:'p7',name:'Toyota U660E gearbox',make:'Toyota',model:'Camry',fits:'Camry ACV40 2007–2011',condition:'Used JP',sku:'GBX-U660-052',price:6200,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'90-day warranty',stock:'1 on shelf',imgLabel:'Automatic gearbox'},
+  {id:'p8',name:'Hyundai Tucson brake pad set',make:'Hyundai',model:'Tucson',fits:'Tucson TL 2015–2020 · Sportage QL',condition:'Aftermarket',sku:'BRK-TUC-221',price:310,yard:'Abossey Okai · Lane 7',rating:'4.3',reviews:54,warranty:'30-day warranty',stock:'22 on shelf',imgLabel:'Brake pad set'},
+  {id:'p9',name:'Toyota Hilux front shock absorber',make:'Toyota',model:'Hilux',fits:'Hilux AN120/AN130 2015–2020',condition:'New OEM',sku:'SHK-HLX-303',price:540,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'12-month warranty',stock:'14 on shelf',imgLabel:'Shock absorber'},
+  {id:'p10',name:'Nissan Altima timing chain kit',make:'Nissan',model:'Altima',fits:'Altima L32/L33 2007–2018',condition:'Used JP',sku:'TCK-ALT-118',price:960,yard:'Suame Magazine · Block C',rating:'4.6',reviews:88,warranty:'30-day warranty',stock:'5 on shelf',imgLabel:'Timing chain kit'},
+  {id:'p11',name:'Nissan Titan brake caliper',make:'Nissan',model:'Titan',fits:'Titan A60 2004–2015',condition:'Aftermarket',sku:'CAL-TTN-227',price:420,yard:'Abossey Okai · Lane 7',rating:'4.3',reviews:54,warranty:'30-day warranty',stock:'7 on shelf',imgLabel:'Brake caliper'},
+  {id:'p12',name:'Kia Soul CV joint',make:'Kia',model:'Soul',fits:'Soul PS/QS 2010–2019',condition:'New OEM',sku:'CVJ-SOL-064',price:390,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'6-month warranty',stock:'9 on shelf',imgLabel:'CV joint'},
+  {id:'p13',name:'Toyota Corolla clutch kit',make:'Toyota',model:'Corolla',fits:'Corolla E140/E170 2009–2018',condition:'New OEM',sku:'CLU-COR-071',price:720,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'12-month warranty',stock:'6 on shelf',imgLabel:'Clutch kit'},
+  {id:'p14',name:'Toyota RAV4 water pump',make:'Toyota',model:'RAV4',fits:'RAV4 ACA33/XA30 2006–2012',condition:'Used JP',sku:'WPM-RAV-134',price:260,yard:'Suame Magazine · Block C',rating:'4.6',reviews:88,warranty:'30-day warranty',stock:'10 on shelf',imgLabel:'Water pump'},
+  {id:'p15',name:'Nissan X-Trail brake disc set',make:'Nissan',model:'X-Trail',fits:'X-Trail T31 2008–2013',condition:'Aftermarket',sku:'BRK-XTR-192',price:480,yard:'Abossey Okai · Lane 7',rating:'4.3',reviews:54,warranty:'30-day warranty',stock:'13 on shelf',imgLabel:'Brake disc set'},
+  {id:'p16',name:'Nissan Altima power steering pump',make:'Nissan',model:'Altima',fits:'Altima L32/L33 2007–2018',condition:'Used JP',sku:'PSP-ALT-208',price:580,yard:'Suame Magazine · Block C',rating:'4.6',reviews:88,warranty:'30-day warranty',stock:'4 on shelf',imgLabel:'Power steering pump'},
+  {id:'p17',name:'Hyundai Elantra ignition coil set',make:'Hyundai',model:'Elantra',fits:'Elantra AD 2016–2020',condition:'New OEM',sku:'IGN-ELA-052',price:340,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'6-month warranty',stock:'17 on shelf',imgLabel:'Ignition coil set'},
+  {id:'p18',name:'Hyundai Tucson wheel bearing',make:'Hyundai',model:'Tucson',fits:'Tucson TL 2015–2020',condition:'Aftermarket',sku:'WHB-TUC-089',price:210,yard:'Abossey Okai · Lane 7',rating:'4.3',reviews:54,warranty:'30-day warranty',stock:'19 on shelf',imgLabel:'Wheel bearing'},
+  {id:'p19',name:'Kia Rio timing belt kit',make:'Kia',model:'Rio',fits:'Rio UB 2012–2017',condition:'New OEM',sku:'TBK-RIO-146',price:390,yard:'Abossey Okai · Lane 3',rating:'4.9',reviews:312,warranty:'12-month warranty',stock:'8 on shelf',imgLabel:'Timing belt kit'},
+  {id:'p20',name:'Kia Soul shock absorber',make:'Kia',model:'Soul',fits:'Soul PS/QS 2010–2019',condition:'Used JP',sku:'SHK-SOL-077',price:300,yard:'Suame Magazine · Block C',rating:'4.6',reviews:88,warranty:'30-day warranty',stock:'6 on shelf',imgLabel:'Shock absorber'}
+];
+const cedi = n => 'GH₵ ' + n.toLocaleString('en-GH');
+const nowTime = () => { const d = new Date(); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); };
+
+class Component extends DCLogic {
+  state = {
+    screen:'home', home:null, lowData:false, pdpId:'p1',
+    cart:['p5','p3'], fitMake:'Toyota', fitModel:'Corolla', fitYear:'2015', fitPart:'Any part',
+    vin:'', vinDecoded:false, ful:'rider', pay:'momo', draft:'', offerOpen:true,
+    headerQuery:'', query:'', offers:{}, pdpOffer:null,
+    addPartOpen:false, newPartPrice:480, newPartFloor:380, toastOpen:false, toastBody:'',
+    newPartName:'', newPartCategory:'Engine', newPartMake:'Toyota', newPartModel:'Corolla', newPartYear:'2016',
+    newPartCondition:'New OEM', newPartSku:'', newPartSkuTouched:false, newPartQty:1, newPartYard:'Block A', newPartWarranty:'30 days',
+    customParts:[],
+    messages:[
+      {me:false,text:'Good morning — G.Adu Motors counter 2. How can we help?',time:'08:42'},
+      {me:true,text:'Morning. My Corolla 2013 alternator is dead. Do you have one?',time:'08:44'},
+      {me:true,text:'📷 Photo of the old unit (casting 27060-0T030)',time:'08:44'},
+      {me:false,text:'Yes — that is a 1NZ-FE unit. We have a tested used JP one on the shelf, Lane 3. Sending you the quote now.',time:'08:47'}
+    ]
+  };
+
+  go = s => () => this.setState({screen:s, ...(s==='home'?{}:{}) });
+
+  renderVals() {
+    const st = this.state;
+    const home = st.home || this.props.defaultHomeLayout || 'B';
+    const floorPct = (this.props.negotiationFloorPct ?? 80) / 100;
+    const nav = [['home','Home'],['finder','Fit finder'],['results','Results'],['pdp','Part'],['cart','Checkout'],['track','Tracking'],['chat','Chat'],['admin','Dashboard']];
+    const pillBase = 'padding:4px 9px;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;letter-spacing:.1em;';
+    const screens = nav.map(([k,label]) => ({
+      label, go:this.go(k),
+      style: pillBase + (st.screen===k ? 'background:var(--color-accent);opacity:1' : 'opacity:.5')
+    }));
+
+    const byId = id => CATALOG.concat(st.customParts).find(p => p.id === id);
+    const negFloorOf = p => Math.round(p.price * floorPct / 10) * 10;
+    const negBits = p => {
+      const floor = negFloorOf(p);
+      const val = st.offers[p.id] ?? p.price;
+      return {
+        negMin: floor, negMax: p.price, negFloor: cedi(floor), negValue: val,
+        negSet: e => { const v = Math.max(floor, Math.min(p.price, Number(e.target.value) || floor)); this.setState(s=>({offers:{...s.offers, [p.id]: v}})); },
+        negSend: e => {
+          if (e && e.stopPropagation) e.stopPropagation();
+          const price = st.offers[p.id] ?? p.price;
+          const time = nowTime();
+          this.setState(s => ({
+            screen:'chat', offerOpen:false,
+            messages:[...s.messages, {me:true, text:'Would you take '+cedi(price)+' for the '+p.name+'? ('+p.sku+')', time}]
+          }));
+          setTimeout(()=>this.setState(s=>({messages:[...s.messages, {me:false, text: price<=negFloorOf(p) ? 'That works — I\'ll hold it at '+cedi(price)+'.' : 'Let me check with the yard and get back to you.', time: nowTime()}]})), 900);
+        }
+      };
+    };
+    const decorate = p => ({...p, price:cedi(p.price), open:()=>this.setState({screen:'pdp',pdpId:p.id}),
+      add:e=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.setState(s=>({cart:[...s.cart,p.id]})); },
+      ...negBits(p)});
+    const stop = e=>{ if(e&&e.stopPropagation) e.stopPropagation(); };
+    const q = (st.query || '').trim().toLowerCase();
+    const allProducts = CATALOG.concat(st.customParts).map(decorate);
+    const products = q ? allProducts.filter(p =>
+      p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.fits.toLowerCase().includes(q)
+    ) : allProducts.filter(p => p.make === st.fitMake && p.model === st.fitModel);
+    const pdpRaw = byId(st.pdpId) || CATALOG[0];
+
+    const cartItems = st.cart.map(byId).filter(Boolean);
+    const subtotal = cartItems.reduce((a,p)=>a+p.price,0);
+    const delivery = st.ful==='rider' ? 35 : 0;
+    const total = subtotal + delivery;
+
+    const payMethods = [
+      {k:'momo',title:'Mobile Money',blurb:'MTN MoMo · Telecel Cash · AT Money. Prompt sent to your phone.'},
+      {k:'card',title:'Bank card',blurb:'Visa or Mastercard, 3-D Secure. Processed in cedis.'},
+      {k:'cod',title:'Cash on delivery',blurb:'Pay the rider at your gate. Accra only, orders under GH₵ 3,000.'},
+      {k:'shop',title:'Pay at the shop',blurb:'Reserve now, settle at the counter when you collect.'}
+    ].map(m => ({...m, on:st.pay===m.k, set:()=>this.setState({pay:m.k})}));
+
+    const stepData = [
+      ['Order placed','Paid by MTN MoMo · receipt sent to 024 431 8890','09:14','done'],
+      ['Yard confirmed the part','Lane 3 pulled ENG-2ZR-018 and matched the casting number','09:31','done'],
+      ['Packed & sealed','Photographed on the counter before sealing — see the thread','09:58','done'],
+      ['Rider collected','Kwabena Mensah picked up from Suame Magazine','10:22','active'],
+      ['Delivered to you','Expected before 12:30 · Dansoman, Accra','—','todo']
+    ];
+    const steps = stepData.map(([title,body,time,state],i) => ({
+      title, body, time,
+      dot:'width:14px;height:14px;flex:none;'+(state==='todo'?'border:2px solid var(--color-divider);background:var(--color-bg)':'background:var(--color-accent)'),
+      line:'flex:1;width:2px;background:'+(state==='done'?'var(--color-accent)':'var(--color-divider)')+';'+(i===stepData.length-1?'display:none':'')
+    }));
+
+    const messages = st.messages.map(m => ({
+      text:m.text, time:m.time,
+      row:'display:flex;justify-content:'+(m.me?'flex-end':'flex-start'),
+      bubble:'max-width:78%;padding:9px 12px;'+(m.me
+        ? 'background:var(--color-accent);color:var(--color-bg)'
+        : 'background:var(--color-bg);border:1px solid var(--color-divider)'),
+      timeStyle:'font-size:10px;margin-top:4px;opacity:.6;text-align:right'
+    }));
+
+    const orders = [
+      ['GA-24817','Toyota 2ZR-FE radiator','Kofi Asare','Rider · Dansoman','Rider en route','tag-accent',480],
+      ['GA-24816','Hyundai Elantra axle pair','Fosu Auto (trade)','Pickup · Lane 3','Awaiting pickup','tag-neutral',2560],
+      ['GA-24812','Nissan QR25DE head','Ama Boateng','Rider · Tema','Needs packing','tag-outline',2150],
+      ['GA-24809','Kia Rio alternator','Suame Spares (trade)','Pickup · Lane 3','Paid','tag-neutral',620],
+      ['GA-24803','Toyota U660E gearbox','Nii Armah','Rider · Adenta','Fit confirmed','tag-neutral',6200]
+    ].map(([id,part,buyer,ful,status,tagClass,value]) => ({id,part,buyer,ful,status,tagClass,value:cedi(value)}));
+
+    const ratingBars = [['Part as described',96],['Fitment accuracy',94],['Dispatch speed',89],['Counter replies',92]]
+      .map(([l,v]) => ({l, v:(v/20).toFixed(1), fill:'display:block;height:6px;width:'+v+'%;background:var(--color-accent)'}));
+
+    return {
+      screens, cartCount:cartItems.length, lowData:st.lowData, showImg:!st.lowData,
+      toggleLowData:()=>this.setState(s=>({lowData:!s.lowData})),
+      lowDataPill:'width:30px;height:16px;background:'+(st.lowData?'var(--color-accent)':'var(--color-neutral-600)')+';display:inline-flex;align-items:center;padding:2px;transition:background .15s',
+      lowDataKnob:'width:12px;height:12px;background:var(--color-bg);display:block;margin-left:'+(st.lowData?'14px':'0')+';transition:margin-left .15s',
+      goHome:this.go('home'), goFinder:this.go('finder'), goResults:this.go('results'),
+      goCart:this.go('cart'), goTrack:this.go('track'), goChat:this.go('chat'), goAdmin:this.go('admin'),
+      isHome:st.screen==='home', isFinder:st.screen==='finder', isResults:st.screen==='results',
+      isPdp:st.screen==='pdp', isCart:st.screen==='cart', isTrack:st.screen==='track',
+      isChat:st.screen==='chat', isAdmin:st.screen==='admin',
+
+      homeA:home==='A', homeB:home==='B', homeC:home==='C',
+      setHomeA:()=>this.setState({home:'A'}), setHomeB:()=>this.setState({home:'B'}), setHomeC:()=>this.setState({home:'C'}),
+      homeNote:{A:'Fit-finder rail beside a live stock grid — fastest route for a buyer who knows the car.',
+                B:'Poster-led storefront: the accent runs as a field, categories below. Best for first-time visitors.',
+                C:'Dense ledger for resellers — the whole floor as one scannable list.'}[home],
+
+      featured:allProducts.slice(0,6), ledger:allProducts, products,
+      headerQuery:st.headerQuery,
+      setHeaderQuery:e=>this.setState({headerQuery:e.target.value}),
+      runHeaderSearch:()=>this.setState({query:st.headerQuery, screen:'results'}),
+      onHeaderSearchKey:e=>{ if(e.key==='Enter') this.setState({query:st.headerQuery, screen:'results'}); },
+      resultQualifier: q ? 'match "'+st.query+'"' : 'fit '+st.fitMake+' '+st.fitModel+' '+st.fitYear,
+      categories:[
+        {name:'Engines & long blocks',blurb:'Complete JP units, bench-tested, compression figures on the tag.',count:'318 in stock'},
+        {name:'Gearboxes & axles',blurb:'Auto and manual, CV shafts, differentials.',count:'204 in stock'},
+        {name:'Suspension & steering',blurb:'Struts, control arms, rack ends for Ghanaian roads.',count:'611 in stock'},
+        {name:'Braking',blurb:'Pads, discs, calipers, ABS sensors.',count:'488 in stock'},
+        {name:'Electrical',blurb:'Alternators, starters, ECUs, sensors.',count:'527 in stock'},
+        {name:'Body & cooling',blurb:'Radiators, condensers, bumpers, lamps.',count:'332 in stock'}
+      ],
+      stats:[{n:'2,480',l:'Parts on the shelf right now'},{n:'4.9',l:'Average yard rating, 312 reviews'},{n:'40 min',l:'Ready for pickup at Lane 3'},{n:'22 yrs',l:'Trading at Abossey Okai'}],
+
+      fitMake:st.fitMake, fitModel:st.fitModel, fitYear:st.fitYear, fitPart:st.fitPart,
+      setPart:e=>this.setState({fitPart:e.target.value}),
+      fitLabel:st.fitMake+' '+st.fitModel+' '+st.fitYear,
+      modelOptions: MODELS_BY_MAKE[st.fitMake] || [],
+      setMake:e=>{ const make=e.target.value; this.setState({fitMake:make, fitModel:(MODELS_BY_MAKE[make]||[])[0]}); },
+      setModel:e=>this.setState({fitModel:e.target.value}),
+      setYear:e=>this.setState({fitYear:e.target.value}),
+      vin:st.vin, vinDecoded:st.vinDecoded,
+      setVin:e=>this.setState({vin:e.target.value}),
+      decodeVin:()=>this.setState({vinDecoded:true, fitMake:'Toyota', fitModel:'Corolla', fitYear:'2013'}),
+      resultCount:products.length,
+
+      pdp:{...pdpRaw, price:cedi(pdpRaw.price), ...negBits(pdpRaw)},
+      pdpNegValue: st.offers[pdpRaw.id] ?? pdpRaw.price,
+      setPdpNeg: negBits(pdpRaw).negSet,
+      sendPdpOffer: negBits(pdpRaw).negSend,
+      addPdp:()=>this.setState(s=>({cart:[...s.cart,s.pdpId], screen:'cart'})),
+      stop,
+      pdpSpecs:[
+        {k:'Part number',v:pdpRaw.sku},
+        {k:'Condition',v:pdpRaw.condition==='Used JP'?'Used — Japanese import, tested':pdpRaw.condition},
+        {k:'Origin',v:pdpRaw.condition==='Used JP'?'Japan (RHD donor vehicle)':'Manufacturer supplied'},
+        {k:'Warranty',v:pdpRaw.warranty},
+        {k:'Yard',v:pdpRaw.yard},
+        {k:'Weight',v:'6.4 kg'}
+      ],
+
+      cart:cartItems.map((p,i)=>({...p, price:cedi(p.price), ...negBits(p),
+        remove:()=>this.setState(s=>({cart:s.cart.filter((_,j)=>j!==i)}))})),
+      cartEmpty:cartItems.length===0,
+      yardCount:new Set(cartItems.map(p=>p.yard)).size,
+      subtotal:subtotal.toLocaleString('en-GH'),
+      deliveryFee: delivery ? cedi(delivery) : 'Free · pickup',
+      vat:Math.round(total*0.125/1.125).toLocaleString('en-GH'),
+      total:total.toLocaleString('en-GH'),
+      isRider:st.ful==='rider', isPickup:st.ful==='pickup',
+      setRider:()=>this.setState({ful:'rider'}), setPickup:()=>this.setState({ful:'pickup'}),
+      payMethods, isMomo:st.pay==='momo',
+      payCta:{momo:'Send MoMo prompt',card:'Pay by card',cod:'Place order · pay the rider',shop:'Reserve · pay at the counter'}[st.pay],
+      placeOrder:()=>this.placeOrder(),
+      toastOpen:st.toastOpen, toastBody:st.toastBody,
+      closeToast:()=>this.setState({toastOpen:false}),
+
+      steps, messages, draft:st.draft, offerOpen:st.offerOpen,
+      setDraft:e=>this.setState({draft:e.target.value}),
+      onKey:e=>{ if(e.key==='Enter') this.send(); },
+      send:()=>this.send(),
+      acceptOffer:()=>this.setState(s=>({offerOpen:false, cart:[...s.cart,'p4'], screen:'cart'})),
+
+      adminDescription: this.props.adminDescription ?? 'Track today\'s orders, keep stock levels honest, and reply to counter enquiries fast enough to hold the verified badge.',
+      addPartOpen:st.addPartOpen, addPartCta: st.addPartOpen ? 'Close' : 'Add part to stock',
+      toggleAddPart:()=>this.setState(s=>({addPartOpen:!s.addPartOpen})),
+      newPartPrice:st.newPartPrice, newPartFloor:st.newPartFloor,
+      setNewPartPrice:e=>this.setState({newPartPrice:Number(e.target.value)||0}),
+      setNewPartFloor:e=>{
+        const price = st.newPartPrice || 1;
+        const v = Math.min(Number(e.target.value)||0, price);
+        this.setState({newPartFloor:v});
+      },
+      newPartFloorPct: st.newPartPrice ? Math.round(st.newPartFloor/st.newPartPrice*100)+'%' : '—',
+      newPartName:st.newPartName, setNewPartName:e=>this.setState({newPartName:e.target.value}),
+      newPartCategory:st.newPartCategory, setNewPartCategory:e=>this.setState({newPartCategory:e.target.value}),
+      newPartMake:st.newPartMake,
+      setNewPartMake:e=>{ const make=e.target.value; this.setState({newPartMake:make, newPartModel:(MODELS_BY_MAKE[make]||[])[0]}); },
+      newPartModel:st.newPartModel, setNewPartModel:e=>this.setState({newPartModel:e.target.value}),
+      newPartModelOptions: MODELS_BY_MAKE[st.newPartMake] || [],
+      newPartYear:st.newPartYear, setNewPartYear:e=>this.setState({newPartYear:e.target.value}),
+      newPartCondition:st.newPartCondition, setNewPartCondition:e=>this.setState({newPartCondition:e.target.value}),
+      newPartQty:st.newPartQty, setNewPartQty:e=>this.setState({newPartQty:Number(e.target.value)||0}),
+      newPartYard:st.newPartYard, setNewPartYard:e=>this.setState({newPartYard:e.target.value}),
+      newPartWarranty:st.newPartWarranty, setNewPartWarranty:e=>this.setState({newPartWarranty:e.target.value}),
+      newPartSkuDisplay: st.newPartSkuTouched ? st.newPartSku : skuSuggest(st),
+      setNewPartSku:e=>this.setState({newPartSku:e.target.value, newPartSkuTouched:true}),
+      saveNewPart:()=>{
+        const sku = st.newPartSkuTouched ? st.newPartSku : skuSuggest(st);
+        const id = 'c'+Date.now();
+        const part = {
+          id, name: st.newPartName || (st.newPartMake+' '+st.newPartModel+' '+st.newPartCategory.toLowerCase()),
+          make: st.newPartMake, model: st.newPartModel,
+          fits: st.newPartModel+' '+st.newPartYear, condition: st.newPartCondition,
+          sku, price: st.newPartPrice, yard: 'Suame Magazine · '+st.newPartYard,
+          rating:'—', reviews:0, warranty: st.newPartWarranty, qty: st.newPartQty
+        };
+        this.setState(s => ({
+          customParts:[...s.customParts, part],
+          toastOpen:true, toastBody: part.name+' added to stock',
+          newPartName:'', newPartSku:'', newPartSkuTouched:false, newPartQty:1
+        }));
+        setTimeout(()=>this.setState({toastOpen:false}), 2600);
+      },
+      kpis:[{l:'Orders today',n:'17',d:'+4 vs. yesterday'},{l:'Revenue today',n:'GH₵ 21,480',d:'MoMo 62% · cash 21%'},{l:'Median reply time',n:'6 min',d:'Verified badge held'},{l:'Return rate',n:'1.8%',d:'Below 3% threshold'}],
+      orders, ratingBars,
+      lowStock:[
+        {name:'Toyota 2ZR-FE radiator',fits:'Corolla E140/E170',left:'2 left',sold:41},
+        {name:'Kia Rio alternator 90A',fits:'Rio UB 2012–2017',left:'3 left',sold:27},
+        {name:'Hyundai Tucson brake pads',fits:'Tucson TL 2015–2020',left:'4 left',sold:63},
+        {name:'Nissan QR25DE head',fits:'X-Trail T31',left:'1 left',sold:9}
+      ]
+    };
+  }
+
+  placeOrder() {
+    this.setState({screen:'track', toastOpen:true, toastBody:'Order GA-24817 confirmed — the yard has been notified.'});
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(()=>this.setState({toastOpen:false}), 5000);
+  }
+
+  send() {
+    const t = (this.state.draft || '').trim();
+    if (!t) return;
+    const now = new Date();
+    const time = String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    this.setState(s=>({draft:'', messages:[...s.messages,{me:true,text:t,time}]}));
+    setTimeout(()=>this.setState(s=>({messages:[...s.messages,{me:false,text:'Noted — checking Lane 3 now, one moment.',time}]})), 900);
+  }
+}
+
+</script>
+</body>
+</html>
