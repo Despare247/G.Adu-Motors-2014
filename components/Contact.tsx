@@ -5,10 +5,10 @@ import { BUSINESS } from '@/utils/data';
 
 export default function Contact() {
   return (
-    <section id="contact" className="bg-ink-50/60 py-16">
+    <section id="contact" className="bg-panel py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="mx-auto mb-10 max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-600">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-700">
             Visit Us
           </span>
           <h2 className="mt-3 font-display text-3xl font-extrabold uppercase text-ink-900">
@@ -34,9 +34,9 @@ export default function Contact() {
           </div>
 
           {/* Hours */}
-          <div className="rounded-2xl border border-ink-100 bg-white p-6 shadow-sm">
+          <div className="border border-[color:var(--color-divider)] bg-canvas p-6">
             <div className="mb-4 flex items-center gap-2">
-              <Clock className="h-5 w-5 text-gold-500" />
+              <Clock className="h-5 w-5 text-accent-600" />
               <h3 className="font-display text-lg font-bold uppercase text-ink-900">
                 Operating Hours
               </h3>
@@ -58,7 +58,7 @@ export default function Contact() {
           </div>
 
           {/* Map */}
-          <div className="overflow-hidden rounded-2xl border border-ink-100 bg-white shadow-sm">
+          <div className="overflow-hidden border border-[color:var(--color-divider)] bg-canvas">
             <iframe
               title="G.Adu Motors location — Kumasi"
               src="https://www.google.com/maps?q=Kumasi,Ghana&output=embed"
@@ -85,8 +85,8 @@ function ContactRow({
   children: ReactNode;
 }) {
   const body = (
-    <div className="flex items-start gap-4 rounded-2xl border border-ink-100 bg-white p-5 shadow-sm transition hover:border-gold-300">
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gold-500/10 text-gold-600">
+    <div className="flex items-start gap-4 border border-[color:var(--color-divider)] bg-canvas p-5 transition hover:border-accent">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-600/10 text-accent-700">
         <Icon className="h-5 w-5" />
       </span>
       <div>

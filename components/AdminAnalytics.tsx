@@ -19,15 +19,11 @@ interface MetricTileProps {
 
 function MetricTile({ icon: Icon, label, value, emphasis }: MetricTileProps) {
   return (
-    <div className="rounded-xl border border-ink-800 bg-ink-900 p-5">
-      <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-ink-400">
-        <Icon className="h-4 w-4 text-gold-400" /> {label}
+    <div className="border border-[color:var(--color-divider)] bg-panel p-5">
+      <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-ink-600">
+        <Icon className="h-4 w-4 text-accent" /> {label}
       </div>
-      <div
-        className={`mt-2 font-display font-extrabold ${
-          emphasis ? 'text-3xl text-gold-400' : 'text-2xl text-white'
-        }`}
-      >
+      <div className={`mt-2 font-display font-extrabold ${emphasis ? 'text-3xl text-accent' : 'text-2xl'}`}>
         {value}
       </div>
     </div>
@@ -59,30 +55,28 @@ export default function AdminAnalytics({ products, orders }: AdminAnalyticsProps
 
   return (
     <div className="mb-8">
-      <div className="mb-4 flex items-center gap-2 text-white">
-        <BarChart3 className="h-5 w-5 text-gold-400" />
-        <h3 className="font-display text-lg font-extrabold uppercase tracking-wide">Business Analytics</h3>
+      <div className="mb-4 flex items-center gap-2">
+        <BarChart3 className="h-5 w-5 text-accent" />
+        <h3 className="m-0 text-lg">Business analytics</h3>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <MetricTile
           icon={Wallet}
-          label="Total Sales Revenue"
+          label="Total sales revenue"
           value={`${BUSINESS.currency} ${totalRevenue.toLocaleString()}`}
           emphasis
         />
-        <MetricTile icon={Package} label="Active Inventory Volume" value={products.length.toLocaleString()} />
+        <MetricTile icon={Package} label="Active inventory volume" value={products.length.toLocaleString()} />
         <MetricTile
           icon={CheckCircle2}
-          label="Completed Transactions"
+          label="Completed transactions"
           value={completedOrders.length.toLocaleString()}
         />
       </div>
 
-      <div className="mt-4 rounded-xl border border-ink-800 bg-ink-900 p-5">
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-ink-400">
-          Top Moving Categories
-        </span>
+      <div className="mt-4 border border-[color:var(--color-divider)] bg-panel p-5">
+        <span className="text-[11px] uppercase tracking-wide text-ink-600">Top moving categories</span>
         {categoryBreakdown.length === 0 ? (
           <p className="mt-2 text-sm text-ink-500">No completed sales yet.</p>
         ) : (
@@ -90,10 +84,10 @@ export default function AdminAnalytics({ products, orders }: AdminAnalyticsProps
             {categoryBreakdown.map(([label, count]) => (
               <li
                 key={label}
-                className="flex items-center justify-between border-b border-ink-800 pb-2 text-sm last:border-0 last:pb-0"
+                className="flex items-center justify-between border-b border-[color:var(--color-divider)] pb-2 text-sm last:border-0 last:pb-0"
               >
-                <span className="text-ink-200">{label}</span>
-                <span className="font-bold text-gold-400">
+                <span>{label}</span>
+                <span className="font-bold text-accent">
                   {count} sale{count === 1 ? '' : 's'}
                 </span>
               </li>

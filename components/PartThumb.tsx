@@ -11,8 +11,8 @@ export default function PartThumb({ imageUrl, name }: PartThumbProps) {
     return <img src={imageUrl} alt={name} className="h-full w-full object-cover" loading="lazy" />;
   }
   return (
-    <div className="grid h-full w-full place-items-center bg-ink-800">
-      <Car className="h-12 w-12 text-gold-500/70" strokeWidth={1.5} />
+    <div className="grid h-full w-full place-items-center bg-ink-100">
+      <Car className="h-12 w-12 text-ink-400" strokeWidth={1.5} />
     </div>
   );
 }

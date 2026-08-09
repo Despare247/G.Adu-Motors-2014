@@ -1,14 +1,14 @@
 export function PartCardSkeleton() {
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-ink-800 bg-ink-900">
-      <div className="aspect-[4/3] w-full animate-pulse bg-ink-800" />
+    <div className="flex flex-col border border-[color:var(--color-divider)] bg-panel">
+      <div className="aspect-[4/3] w-full animate-pulse bg-ink-100" />
       <div className="flex flex-col gap-2 p-4">
-        <div className="h-3 w-16 animate-pulse rounded bg-ink-800" />
-        <div className="h-4 w-full animate-pulse rounded bg-ink-800" />
-        <div className="h-3 w-24 animate-pulse rounded bg-ink-800" />
-        <div className="mt-2 h-6 w-20 animate-pulse rounded bg-ink-800" />
-        <div className="mt-3 h-9 w-full animate-pulse rounded-lg bg-ink-800" />
-        <div className="h-9 w-full animate-pulse rounded-lg bg-ink-800" />
+        <div className="h-3 w-16 animate-pulse bg-ink-100" />
+        <div className="h-4 w-full animate-pulse bg-ink-100" />
+        <div className="h-3 w-24 animate-pulse bg-ink-100" />
+        <div className="mt-2 h-6 w-20 animate-pulse bg-ink-100" />
+        <div className="mt-3 h-9 w-full animate-pulse bg-ink-100" />
+        <div className="h-9 w-full animate-pulse bg-ink-100" />
       </div>
     </div>
   );

@@ -90,8 +90,8 @@ export default function AdminPage() {
 
   if (guard === 'checking') {
     return (
-      <main className="flex min-h-[60vh] items-center justify-center bg-ink-950">
-        <div className="flex items-center gap-2 text-sm text-ink-400">
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <div className="flex items-center gap-2 text-sm text-ink-600">
           <Loader2 className="h-4 w-4 animate-spin" /> Checking your access…
         </div>
       </main>
@@ -105,10 +105,10 @@ export default function AdminPage() {
 
   if (guard === 'denied') {
     return (
-      <main className="flex min-h-[60vh] flex-col items-center justify-center gap-3 bg-ink-950 px-4 text-center">
-        <ShieldAlert className="h-10 w-10 text-danger-400" />
-        <h1 className="font-display text-2xl font-extrabold uppercase text-white">Access Denied</h1>
-        <p className="max-w-sm text-sm text-ink-400">
+      <main className="flex min-h-[60vh] flex-col items-center justify-center gap-3 px-4 text-center">
+        <ShieldAlert className="h-10 w-10 text-danger-500" />
+        <h1 className="text-2xl">Access denied</h1>
+        <p className="max-w-sm text-sm text-ink-600">
           This dashboard is for G.Adu Motors admins only. If you believe this is a mistake, contact the shop owner
           to have your account promoted.
         </p>
@@ -117,15 +117,11 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-ink-950 py-12">
+    <main className="min-h-screen py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="mb-8">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-400">
-            Admin Dashboard
-          </span>
-          <h1 className="mt-2 font-display text-3xl font-extrabold uppercase text-white">
-            Manage Inventory &amp; Orders
-          </h1>
+        <div className="mb-8 border-b-2 border-[color:var(--color-divider)] pb-4">
+          <span className="text-xs uppercase tracking-[0.2em] text-accent">Admin dashboard</span>
+          <h1 className="mt-2">Manage inventory &amp; orders</h1>
         </div>
 
         <AdminAnalytics products={products} orders={orders} />
@@ -134,7 +130,7 @@ export default function AdminPage() {
 
         <AdminForm onAdded={(product) => setProducts((prev) => [product, ...prev])} />
 
-        {error && <p className="mb-4 text-sm text-danger-400">{error}</p>}
+        {error && <p className="mb-4 text-sm text-danger-600">{error}</p>}
 
         {loadingProducts ? (
           <InventoryGridSkeleton />

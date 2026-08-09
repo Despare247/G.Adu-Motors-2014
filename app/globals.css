@@ -1,45 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
 @import "tailwindcss";
 
+/* ══════════════════════════════════════════════════════════════════════
+   Modernist — design tokens. Flat, architectural: single red accent,
+   zero corner radius, 2px rules instead of shadows for separation.
+   Ported from design_handoff_gadu_motors/design-system/styles.css.
+   ══════════════════════════════════════════════════════════════════ */
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Barlow Condensed", "Inter", sans-serif;
+  --font-sans: "Archivo", system-ui, sans-serif;
+  --font-display: "Archivo", system-ui, sans-serif;
 
-  /* Ink — neutral scale spanning pure white to deep black.
-     Light sections use the low end (50-200), dark sections (the
-     "Shop Floor" inventory module, nav, footer) use the high end
-     (800-950). Mid-tones read as sleek metallic silver / slate-grey. */
-  --color-ink-50: #ffffff;
-  --color-ink-100: #f2f2f2;
-  --color-ink-200: #e2e2e2;
-  --color-ink-300: #c6c6c8;
-  --color-ink-400: #9a9a9e;
-  --color-ink-500: #737378;
-  --color-ink-600: #4c4c52;
-  --color-ink-700: #333338;
-  --color-ink-800: #1e1e22;
-  --color-ink-900: #131315;
-  --color-ink-950: #08080a;
+  --color-canvas: #f3f2f2;
+  --color-panel: #eae9e9;
 
-  /* Gold — the single accent used for high-priority actions, borders
-     and highlights. Deliberately restrained/metallic, not a bright yellow. */
-  --color-gold-50: #fbf8ee;
-  --color-gold-100: #f5ecd2;
-  --color-gold-200: #ead9a5;
-  --color-gold-300: #dec378;
-  --color-gold-400: #d4af37;
-  --color-gold-500: #c29a2e;
-  --color-gold-600: #a17f23;
-  --color-gold-700: #7d621c;
-  --color-gold-800: #5b4715;
-  --color-gold-900: #3d300e;
-  --color-gold-950: #241c08;
+  /* Ink — neutral scale. Light sections use the low end, dark sections
+     (nav, footer, the inventory catalogue) use the high end. */
+  --color-ink-50: #f8f4f4;
+  --color-ink-100: #eae7e7;
+  --color-ink-200: #d7d3d3;
+  --color-ink-300: #bab6b6;
+  --color-ink-400: #9b9797;
+  --color-ink-500: #7d7979;
+  --color-ink-600: #605d5d;
+  --color-ink-700: #444141;
+  --color-ink-800: #2d2b2b;
+  --color-ink-900: #201e1d;
+  --color-ink-950: #131211;
 
-  /* Oxblood — used only for destructive actions and rejection states,
-     kept muted so it reads as "industrial hazard" rather than bootstrap-red. */
+  /* Accent — the single accent color used for CTAs, borders and highlights. */
+  --color-accent-100: #fff2ef;
+  --color-accent-200: #ffe0d9;
+  --color-accent-300: #ffc4b8;
+  --color-accent-400: #ff9783;
+  --color-accent-500: #ff563c;
+  --color-accent-600: #dd2b0f;
+  --color-accent-700: #ae1800;
+  --color-accent-800: #7c1405;
+  --color-accent-900: #4d170e;
+  --color-accent: #ec3013;
+
+  --color-accent-2-100: #fff2ef;
+  --color-accent-2-200: #ffe0da;
+  --color-accent-2-300: #ffc4b9;
+  --color-accent-2-400: #ff9784;
+  --color-accent-2-500: #ef6853;
+  --color-accent-2-600: #c94b39;
+  --color-accent-2-700: #9e3526;
+  --color-accent-2-800: #71261b;
+  --color-accent-2-900: #471d16;
+  --color-accent-2: #e15b47;
+
+  /* Danger — kept distinct from the accent red for error/destructive states. */
   --color-danger-400: #b33a3a;
   --color-danger-500: #8f2a2a;
   --color-danger-600: #711f1f;
+
+  /* Zero out Tailwind's whole radius scale so every rounded-* utility
+     already used throughout the app goes flat without hunting down each
+     occurrence — rounded-full is untouched since a few circular badges
+     (avatar-style monograms, radio dots) still need it. */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+
+  /* Flatten Tailwind's shadow scale to the Modernist ink-tinted values —
+     used sparingly (hover elevation on cards only), never the old gold glow. */
+  --shadow-2xs: 0 1px 1px color-mix(in srgb, #2d2b2b 10%, transparent);
+  --shadow-xs: 0 1px 2px color-mix(in srgb, #2d2b2b 12%, transparent);
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+  --shadow-xl: 0 16px 40px color-mix(in srgb, #2d2b2b 26%, transparent);
+  --shadow-2xl: 0 22px 54px color-mix(in srgb, #2d2b2b 30%, transparent);
+}
+
+:root {
+  --color-divider: color-mix(in srgb, #201e1d 40%, transparent);
 }
 
 html {
@@ -47,11 +87,17 @@ html {
 }
 
 body {
-  background-color: #ffffff;
-  color: #131315;
+  background-color: var(--color-canvas);
+  color: var(--color-ink-900);
   font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.015em;
 }
 
 ::-webkit-scrollbar {
@@ -59,15 +105,154 @@ body {
   height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #e2e2e2;
+  background: var(--color-ink-100);
 }
 ::-webkit-scrollbar-thumb {
-  background: #c6c6c8;
-  border-radius: 6px;
+  background: var(--color-ink-300);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9a9a9e;
+  background: var(--color-ink-400);
 }
+
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Component layer — shared classes used throughout instead of one-off
+   utility soup. Documented in design_handoff_gadu_motors/design-system/
+   modernist-readme.md.
+   ══════════════════════════════════════════════════════════════════ */
+.hr {
+  height: 2px;
+  border: 0;
+  margin: 16px 0;
+  background: var(--color-divider);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--color-ink-900);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 14px;
+  border-radius: 0;
+  transition: background-color 0.15s;
+}
+.btn svg { display: block; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary { background: var(--color-accent); color: var(--color-canvas); }
+.btn-primary:hover { background: var(--color-accent-600); }
+.btn-primary:active { background: var(--color-accent-700); }
+.btn-secondary { border-color: var(--color-divider); }
+.btn-secondary:hover { background: color-mix(in srgb, var(--color-ink-900) 7%, transparent); }
+.btn-secondary:active { background: color-mix(in srgb, var(--color-ink-900) 14%, transparent); }
+.btn-ghost { color: var(--color-accent); padding-inline: 4px; }
+.btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.btn-ghost:active { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
+.btn-icon { width: 36px; height: 36px; padding: 0; }
+.btn-block { width: 100%; margin-top: 8px; justify-content: flex-start; text-align: left; }
+
+.field > label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: color-mix(in srgb, var(--color-ink-900) 70%, transparent);
+}
+.input {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-ink-900);
+  caret-color: var(--color-accent);
+  background: var(--color-panel);
+  border: 1px solid var(--color-divider);
+  border-radius: 0;
+}
+.input:hover { border-color: color-mix(in srgb, var(--color-ink-900) 45%, transparent); }
+.input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
+textarea.input { min-height: 90px; resize: vertical; }
+
+.radio { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; }
+.radio input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.radio .dot {
+  width: 16px; height: 16px; flex: none; border-radius: 50%;
+  border: 1.5px solid var(--color-divider);
+}
+.radio:hover .dot { border-color: var(--color-accent); }
+.radio input:checked + .dot {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: inset 0 0 0 4px var(--color-canvas);
+}
+.radio input:focus-visible + .dot { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+.seg { display: inline-flex; overflow: hidden; border: 1px solid var(--color-divider); }
+.seg-opt { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; font-size: 13px; cursor: pointer; }
+.seg-opt input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.seg-opt + .seg-opt { border-left: 1px solid var(--color-divider); }
+.seg-opt:has(input:checked) { background: var(--color-accent); color: var(--color-canvas); }
+.seg-opt:not(:has(input:checked)):hover { background: color-mix(in srgb, var(--color-ink-900) 7%, transparent); }
+.seg-opt:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+
+.card { display: flex; flex-direction: column; gap: 8px; padding: 12px; background: var(--color-panel); }
+.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+.card-title { font-family: var(--font-display); font-weight: 800; font-size: 17px; line-height: 1.2; }
+.card-body { margin: 0; font-size: 13px; opacity: 0.8; flex: 1; }
+.card-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: color-mix(in srgb, var(--color-ink-900) 50%, transparent); }
+.elev-sm { box-shadow: var(--shadow-sm); }
+.elev-md { box-shadow: var(--shadow-md); }
+.elev-lg { box-shadow: var(--shadow-lg); }
+
+.tag { display: inline-flex; align-items: center; font-size: 11px; letter-spacing: 0.02em; padding: 3px 10px; }
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-accent-2 { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
+.tag-neutral { background: var(--color-ink-50); color: var(--color-ink-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+.nav { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border-bottom: 2px solid var(--color-divider); }
+.nav-brand { font-family: var(--font-display); font-weight: 800; font-size: 18px; margin-right: auto; }
+.nav a { color: inherit; text-decoration: none; font-size: 14px; }
+.nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent); }
+
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th {
+  text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-ink-900) 60%, transparent);
+  padding: 8px; border-bottom: 2px solid var(--color-divider);
+}
+.table td { padding: 8px; border-bottom: 1px solid var(--color-divider); }
+.table tbody tr:hover { background: color-mix(in srgb, var(--color-ink-900) 4%, transparent); }
+
+.dialog-backdrop {
+  position: fixed; inset: 0; display: grid; place-items: center; padding: 16px;
+  background: color-mix(in srgb, var(--color-ink-950) 50%, transparent);
+}
+.dialog {
+  width: min(440px, 100%); display: flex; flex-direction: column; gap: 12px;
+  padding: 16px; background: var(--color-panel); box-shadow: var(--shadow-lg);
+}
+.dialog-title { font-family: var(--font-display); font-weight: 800; font-size: 20px; }
+.dialog-body { font-size: 14px; opacity: 0.85; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
 
 /* Infinite marquee helper for the brand strip */
 .marquee-container {
@@ -88,10 +273,10 @@ body {
   animation: marquee 28s linear infinite;
 }
 
-/* Realtime order-alert flash for the admin dashboard — gold pulse */
+/* Realtime order-alert flash for the admin dashboard */
 @keyframes flash-banner {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.55); }
-  50% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(236, 48, 19, 0.55); }
+  50% { box-shadow: 0 0 0 10px rgba(236, 48, 19, 0); }
 }
 
 .animate-flash-banner {

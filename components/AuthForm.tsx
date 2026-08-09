@@ -44,14 +44,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
   if (signupDone) {
     return (
-      <div className="mx-auto max-w-md rounded-xl border border-gold-300 bg-gold-50 p-6 text-center">
-        <p className="font-semibold text-gold-800">Account created!</p>
+      <div className="mx-auto max-w-md border-l-2 border-accent bg-accent-100 p-6 text-center">
+        <p className="font-bold text-accent-800">Account created!</p>
         <p className="mt-2 text-sm text-ink-700">
           Check <strong>{email}</strong> to confirm your address, then{' '}
-          <Link href="/login" className="underline">
-            log in
-          </Link>
-          .
+          <Link href="/login" className="underline">log in</Link>.
         </p>
       </div>
     );
@@ -59,29 +56,25 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-4">
-      <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-ink-500">
-          Email
-        </label>
-        <div className="flex items-center rounded-lg border border-ink-200 bg-white px-3">
-          <Mail className="h-4 w-4 text-ink-400" />
+      <div className="field">
+        <label>Email</label>
+        <div className="flex items-center gap-2 border border-[color:var(--color-divider)] bg-panel px-2">
+          <Mail className="h-4 w-4 shrink-0 text-ink-500" />
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="w-full bg-transparent px-3 py-2.5 text-sm text-ink-900 outline-none"
+            className="input border-0 bg-transparent px-1"
           />
         </div>
       </div>
 
-      <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-ink-500">
-          Password
-        </label>
-        <div className="flex items-center rounded-lg border border-ink-200 bg-white px-3">
-          <Lock className="h-4 w-4 text-ink-400" />
+      <div className="field">
+        <label>Password</label>
+        <div className="flex items-center gap-2 border border-[color:var(--color-divider)] bg-panel px-2">
+          <Lock className="h-4 w-4 shrink-0 text-ink-500" />
           <input
             type="password"
             required
@@ -89,40 +82,32 @@ export default function AuthForm({ mode }: AuthFormProps) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full bg-transparent px-3 py-2.5 text-sm text-ink-900 outline-none"
+            className="input border-0 bg-transparent px-1"
           />
         </div>
       </div>
 
       {error && (
-        <div className="flex items-start gap-2 rounded-lg border border-danger-500/20 bg-danger-500/5 p-3 text-xs font-medium text-danger-600">
+        <div className="flex items-start gap-2 border-l-2 border-danger-500 bg-[color:color-mix(in_srgb,var(--color-danger-500)_8%,transparent)] p-3 text-xs font-medium text-danger-600">
           <AlertTriangle className="h-4 w-4 shrink-0" /> {error}
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold-500 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-gold-600 disabled:opacity-60 cursor-pointer"
-      >
+      <button type="submit" disabled={loading} className="btn btn-primary btn-block justify-center">
         {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-        {mode === 'login' ? 'Log In' : 'Create Account'}
+        {mode === 'login' ? 'Log in' : 'Create account'}
       </button>
 
-      <p className="text-center text-sm text-ink-500">
+      <p className="text-center text-sm text-ink-600">
         {mode === 'login' ? (
           <>
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="font-semibold text-gold-600 hover:underline">
-              Sign up
-            </Link>
+            <Link href="/signup" className="font-semibold text-accent hover:underline">Sign up</Link>
           </>
         ) : (
           <>
             Already have an account?{' '}
-            <Link href="/login" className="font-semibold text-gold-600 hover:underline">
-              Log in
-            </Link>
+            <Link href="/login" className="font-semibold text-accent hover:underline">Log in</Link>
           </>
         )}
       </p>

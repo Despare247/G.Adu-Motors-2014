@@ -28,10 +28,10 @@ const SERVICES = [
 
 export default function Services() {
   return (
-    <section id="services" className="bg-ink-50/60 py-16">
+    <section id="services" className="bg-panel py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-600">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-700">
             Why Choose Us
           </span>
           <h2 className="mt-3 font-display text-3xl font-extrabold uppercase text-ink-900">
@@ -51,9 +51,9 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="rounded-xl border border-ink-100 bg-white p-6 shadow-sm"
+              className="border border-[color:var(--color-divider)] bg-canvas p-6"
             >
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-gold-500/10 text-gold-600">
+              <span className="grid h-12 w-12 place-items-center rounded-xl bg-accent-600/10 text-accent-700">
                 <s.icon className="h-6 w-6" />
               </span>
               <h3 className="mt-4 text-base font-bold text-ink-900">{s.title}</h3>

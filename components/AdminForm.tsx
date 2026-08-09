@@ -21,17 +21,14 @@ const initialForm = {
   floorPrice: '',
 };
 
-const inputCls =
-  'w-full rounded-lg border border-ink-700 bg-ink-800 px-3 py-2.5 text-sm text-white placeholder:text-ink-500 outline-none focus:border-gold-500/60';
+const inputCls = 'input';
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <label className="block">
-      <span className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-ink-400">
-        {label}
-      </span>
+    <div className="field">
+      <label>{label}</label>
       {children}
-    </label>
+    </div>
   );
 }
 
@@ -136,13 +133,10 @@ export default function AdminForm({ onAdded }: AdminFormProps) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mb-8 rounded-xl border border-gold-500/30 bg-ink-900 p-5 sm:p-6"
-    >
-      <div className="mb-4 flex items-center gap-2 text-gold-400">
+    <form onSubmit={handleSubmit} className="mb-8 border border-[color:var(--color-divider)] bg-panel p-5 sm:p-6">
+      <div className="mb-4 flex items-center gap-2 text-accent">
         <PlusCircle className="h-5 w-5" />
-        <h3 className="font-display text-lg font-extrabold uppercase tracking-wide">Add New Part</h3>
+        <h3 className="m-0 text-lg">Add new part</h3>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -184,7 +178,7 @@ export default function AdminForm({ onAdded }: AdminFormProps) {
           </select>
         </Field>
         <Field label="Part Image">
-          <label className="flex h-[42px] cursor-pointer items-center gap-2 rounded-lg border border-ink-700 bg-ink-800 px-3 text-sm text-ink-300 hover:border-gold-500/50">
+          <label className="flex h-[36px] cursor-pointer items-center gap-2 border border-[color:var(--color-divider)] bg-panel px-3 text-sm text-ink-700 hover:border-accent">
             <Upload className="h-4 w-4 shrink-0" />
             <span className="truncate">{imageFile ? imageFile.name : 'Choose image…'}</span>
             <input
@@ -224,24 +218,20 @@ export default function AdminForm({ onAdded }: AdminFormProps) {
 
       {imagePreview && (
         <div className="mt-4 flex items-center gap-3">
-          <img src={imagePreview} alt="Preview" className="h-16 w-16 rounded-lg object-cover ring-1 ring-ink-700" />
-          <span className="text-xs text-ink-400">Image preview</span>
+          <img src={imagePreview} alt="Preview" className="h-16 w-16 border border-[color:var(--color-divider)] object-cover" />
+          <span className="text-xs text-ink-600">Image preview</span>
         </div>
       )}
 
       {error && (
-        <div className="mt-4 flex items-start gap-2 rounded-lg border border-danger-500/30 bg-danger-500/10 p-3 text-xs font-medium text-danger-400">
+        <div className="mt-4 flex items-start gap-2 border-l-2 border-danger-500 bg-[color:color-mix(in_srgb,var(--color-danger-500)_8%,transparent)] p-3 text-xs font-medium text-danger-600">
           <AlertTriangle className="h-4 w-4 shrink-0" /> {error}
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="mt-5 inline-flex items-center gap-2 rounded-lg bg-gold-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-ink-950 transition hover:bg-gold-400 disabled:opacity-60 cursor-pointer"
-      >
+      <button type="submit" disabled={submitting} className="btn btn-primary mt-5">
         {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <PlusCircle className="h-4 w-4" />}
-        {submitting ? 'Adding…' : 'Add Part'}
+        {submitting ? 'Adding…' : 'Add part'}
       </button>
     </form>
   );

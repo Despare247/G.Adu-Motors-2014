@@ -52,8 +52,8 @@ export default function AdminInventory({ products, onDeleted }: AdminInventoryPr
 
   if (products.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-ink-700 bg-ink-900 py-16 text-center">
-        <p className="text-sm font-semibold text-ink-300">No parts in inventory yet.</p>
+      <div className="border border-dashed border-[color:var(--color-divider)] py-16 text-center">
+        <p className="text-sm font-semibold text-ink-700">No parts in inventory yet.</p>
         <p className="text-sm text-ink-500">Add your first part using the form above.</p>
       </div>
     );
@@ -62,64 +62,45 @@ export default function AdminInventory({ products, onDeleted }: AdminInventoryPr
   return (
     <div>
       {error && (
-        <p className="mb-4 rounded-lg border border-danger-500/30 bg-danger-500/10 p-3 text-xs font-medium text-danger-400">
+        <p className="mb-4 border-l-2 border-danger-500 bg-[color:color-mix(in_srgb,var(--color-danger-500)_8%,transparent)] p-3 text-xs font-medium text-danger-600">
           {error}
         </p>
       )}
       <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
         {products.map((part) => (
-          <div
-            key={part.id}
-            className="relative flex flex-col overflow-hidden rounded-xl border border-ink-800 bg-ink-900 shadow-lg shadow-black/40"
-          >
+          <div key={part.id} className="relative flex flex-col border border-[color:var(--color-divider)] bg-panel">
             <button
               onClick={() => handleDelete(part)}
               disabled={deletingId === part.id}
-              className="absolute right-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-danger-500 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg transition hover:bg-danger-400 disabled:opacity-60 cursor-pointer"
+              className="absolute right-2 top-2 z-10 flex items-center gap-1.5 bg-danger-500 px-2.5 py-1.5 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-danger-600 disabled:opacity-60 cursor-pointer"
             >
-              {deletingId === part.id ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              ) : (
-                <Trash2 className="h-3.5 w-3.5" />
-              )}
+              {deletingId === part.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
               Delete
             </button>
 
-            <div className="aspect-[4/3] w-full overflow-hidden bg-ink-800">
+            <div className="aspect-[4/3] w-full overflow-hidden bg-ink-100">
               <PartThumb imageUrl={part.image_url} name={part.name} />
             </div>
 
             <div className="flex flex-1 flex-col p-4">
-              <span className="text-[11px] font-semibold uppercase tracking-wide text-gold-400">
-                {part.origin}
-              </span>
-              <h3 className="mt-1 text-sm font-bold leading-snug text-white">{part.name}</h3>
-              <p className="mt-0.5 text-xs text-ink-400">
-                {part.make} {part.model} • {part.year}
+              <span className="text-[11px] uppercase tracking-wide text-accent">{part.origin}</span>
+              <h3 className="mt-1 text-sm font-bold leading-snug text-ink-900">{part.name}</h3>
+              <p className="mt-0.5 text-xs text-ink-600">
+                {part.make} {part.model} · {part.year}
               </p>
 
-              <span
-                className={`mt-2 inline-flex w-fit items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
-                  part.condition === 'New'
-                    ? 'border-gold-500/30 bg-gold-500/10 text-gold-300'
-                    : 'border-ink-400/30 bg-white/5 text-ink-300'
-                }`}
-              >
+              <span className={`tag mt-2 w-fit gap-1 ${part.condition === 'New' ? 'tag-accent' : 'tag-neutral'}`}>
                 <Tag className="h-3 w-3" /> {part.condition}
               </span>
 
               <div className="mt-3 flex items-center justify-between text-sm">
                 <div>
                   <span className="block text-[10px] uppercase tracking-wide text-ink-500">Retail</span>
-                  <span className="font-bold text-white">
-                    {BUSINESS.currency} {Number(part.retail_price).toLocaleString()}
-                  </span>
+                  <span className="font-bold">{BUSINESS.currency} {Number(part.retail_price).toLocaleString()}</span>
                 </div>
                 <div className="text-right">
                   <span className="block text-[10px] uppercase tracking-wide text-ink-500">Floor</span>
-                  <span className="font-bold text-gold-400">
-                    {BUSINESS.currency} {Number(part.floor_price).toLocaleString()}
-                  </span>
+                  <span className="font-bold text-accent">{BUSINESS.currency} {Number(part.floor_price).toLocaleString()}</span>
                 </div>
               </div>
             </div>

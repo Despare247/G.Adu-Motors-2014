@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { CartProvider } from '@/contexts/CartContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -13,12 +14,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-ink-50/40 antialiased">
+      <body className="min-h-screen bg-canvas antialiased">
         {/* Loaded once, globally, so PartCard can open the popup from any product card. */}
         <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
-        <Header />
-        {children}
-        <Footer />
+        <CartProvider>
+          <Header />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

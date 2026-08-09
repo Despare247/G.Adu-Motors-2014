@@ -31,11 +31,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2.5">
-                <MapPin className="h-4 w-4 text-gold-400" /> {BUSINESS.city}, {BUSINESS.country}
+                <MapPin className="h-4 w-4 text-accent" /> {BUSINESS.city}, {BUSINESS.country}
               </li>
               <li>
                 <a href={BUSINESS.phoneHref} className="flex items-center gap-2.5 hover:text-white">
-                  <Phone className="h-4 w-4 text-gold-400" /> {BUSINESS.phone}
+                  <Phone className="h-4 w-4 text-accent" /> {BUSINESS.phone}
                 </a>
               </li>
               <li>
@@ -43,7 +43,7 @@ export default function Footer() {
                   href={`mailto:${BUSINESS.email}`}
                   className="flex items-center gap-2.5 hover:text-white"
                 >
-                  <Mail className="h-4 w-4 text-gold-400" /> {BUSINESS.email}
+                  <Mail className="h-4 w-4 text-accent" /> {BUSINESS.email}
                 </a>
               </li>
             </ul>
@@ -85,14 +85,14 @@ export default function Footer() {
               <a
                 href="#"
                 aria-label="Facebook"
-                className="grid h-9 w-9 place-items-center rounded-full bg-ink-800 text-ink-200 transition hover:bg-gold-500 hover:text-white"
+                className="grid h-9 w-9 place-items-center rounded-full bg-ink-800 text-ink-200 transition hover:bg-accent-600 hover:text-white"
               >
                 <Facebook className="h-4 w-4" />
               </a>
               <a
                 href="#"
                 aria-label="Instagram"
-                className="grid h-9 w-9 place-items-center rounded-full bg-ink-800 text-ink-200 transition hover:bg-gold-500 hover:text-white"
+                className="grid h-9 w-9 place-items-center rounded-full bg-ink-800 text-ink-200 transition hover:bg-accent-600 hover:text-white"
               >
                 <Instagram className="h-4 w-4" />
               </a>

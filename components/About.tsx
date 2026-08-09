@@ -25,7 +25,7 @@ export default function About() {
             alt="Auto parts shelves"
             className="rounded-2xl shadow-xl ring-1 ring-ink-100"
           />
-          <div className="absolute -bottom-5 -right-3 hidden rounded-xl bg-gold-500 px-6 py-4 text-white shadow-lg sm:block">
+          <div className="absolute -bottom-5 -right-3 hidden rounded-xl bg-accent-600 px-6 py-4 text-white shadow-lg sm:block">
             <span className="block font-display text-3xl font-extrabold leading-none">9+</span>
             <span className="text-xs font-semibold uppercase tracking-wide">
               Japanese &amp; Korean Makes
@@ -38,7 +38,7 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-600">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-700">
             About G.Adu Motors
           </span>
           <h2 className="mt-3 font-display text-3xl font-extrabold uppercase leading-tight text-ink-900">
@@ -58,7 +58,7 @@ export default function About() {
           <ul className="mt-6 grid gap-3 sm:grid-cols-2">
             {POINTS.map((p) => (
               <li key={p} className="flex items-start gap-2.5 text-sm text-ink-700">
-                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold-500 text-white">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-600 text-white">
                   <Check className="h-3 w-3" />
                 </span>
                 {p}
