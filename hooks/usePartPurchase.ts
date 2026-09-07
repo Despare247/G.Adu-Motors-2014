@@ -3,16 +3,15 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { PublicProduct } from '@/types';
-import { openPaystackCheckout } from '@/utils/paystack';
 import { toIntlGhanaPhone } from '@/utils/phone';
 import type { PurchaseDetails } from '@/components/PurchaseDetailsModal';
 
 export type PurchaseStage = 'idle' | 'offering' | 'ready-to-pay' | 'paying' | 'paid';
 
 /**
- * The offer/buy/Paystack/verify state machine, shared by every screen that
+ * The offer/buy state machine, shared by every screen that
  * lets a customer negotiate or buy a part (Results row, PDP buy box, Cart
- * line). Extracted from PartCard so the same real negotiate + payment logic
+ * line). Extracted from PartCard so the same real negotiate logic
  * isn't duplicated three times.
  */
 export function usePartPurchase(part: PublicProduct) {
@@ -23,7 +22,6 @@ export function usePartPurchase(part: PublicProduct) {
   const [offerMessage, setOfferMessage] = useState<{ ok: boolean; text: string } | null>(null);
   const [error, setError] = useState('');
   const [paidAmount, setPaidAmount] = useState<number | null>(null);
-  const [paidReference, setPaidReference] = useState('');
   const [paidDeliveryAddress, setPaidDeliveryAddress] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [submittingPayment, setSubmittingPayment] = useState(false);
@@ -85,7 +83,6 @@ export function usePartPurchase(part: PublicProduct) {
   const handlePurchaseConfirm = ({
     name,
     phone,
-    network,
     fulfillmentType,
     isInKumasi,
     deliveryAddress,
@@ -94,74 +91,14 @@ export function usePartPurchase(part: PublicProduct) {
     setError('');
     setSubmittingPayment(true);
 
-    // Paystack requires a syntactically valid email to initialize a
-    // transaction. The purchase form intentionally only collects name/phone/
-    // network (per spec), so we derive a harmless placeholder from the
-    // phone number rather than asking the customer to type an email.
-    const placeholderEmail = `${toIntlGhanaPhone(phone).replace('+', '')}@customer.gadumotors.com`;
-
-    // Close our modal before handing off to Paystack's own popup so the two
-    // never stack, and so any onClose/onError feedback below is visible on
-    // the caller instead of being hidden behind this modal.
+    // Close our modal
     setModalOpen(false);
 
-    openPaystackCheckout({
-      email: placeholderEmail,
-      amountGhs: checkoutAmount,
-      metadata: {
-        productId: part.id,
-        productName: part.name,
-        customerName: name,
-        customerPhone: toIntlGhanaPhone(phone),
-        momoNetwork: network,
-        fulfillmentType,
-      },
-      onSuccess: async (reference) => {
-        setStage('paying');
-        try {
-          const res = await fetch('/api/verify-payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              reference,
-              productId: part.id,
-              buyerName: name,
-              buyerPhone: toIntlGhanaPhone(phone),
-              momoNetwork: network,
-              fulfillmentType,
-              isInKumasi,
-              deliveryAddress,
-            }),
-          });
-          const json = await res.json();
-
-          if (!res.ok) {
-            setError(json.error ?? 'Payment could not be verified. Please contact us with your reference.');
-            setStage('idle');
-            return;
-          }
-
-          setPaidAmount(json.amountPaid);
-          setPaidReference(reference);
-          setPaidDeliveryAddress(fulfillmentType === 'delivery' ? deliveryAddress : null);
-          setStage('paid');
-        } catch {
-          setError('Payment succeeded but we could not confirm it — please contact us with your reference.');
-          setStage('idle');
-        } finally {
-          setSubmittingPayment(false);
-        }
-      },
-      onClose: () => {
-        setSubmittingPayment(false);
-        setStage('idle');
-      },
-      onError: (message) => {
-        setSubmittingPayment(false);
-        setError(message);
-        setStage('idle');
-      },
-    });
+    // TODO: Implement payment integration
+    setPaidAmount(checkoutAmount);
+    setPaidDeliveryAddress(fulfillmentType === 'delivery' ? deliveryAddress : null);
+    setStage('paid');
+    setSubmittingPayment(false);
   };
 
   const reset = () => {
@@ -181,7 +118,6 @@ export function usePartPurchase(part: PublicProduct) {
     offerMessage,
     error,
     paidAmount,
-    paidReference,
     paidDeliveryAddress,
     modalOpen,
     submittingPayment,
