@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, User, Phone, Smartphone, AlertTriangle, MapPin, Store, Truck, MessageCircle } from 'lucide-react';
-import { FulfillmentType, MomoNetwork } from '@/types';
+import { X, User, Phone, AlertTriangle, MapPin, Store, Truck, MessageCircle } from 'lucide-react';
+import { FulfillmentType } from '@/types';
 import { BUSINESS } from '@/utils/data';
 import { isValidGhanaPhone } from '@/utils/phone';
 import { outsideKumasiDeliveryLink } from '@/utils/whatsapp';
@@ -12,7 +12,6 @@ import { outsideKumasiDeliveryLink } from '@/utils/whatsapp';
 export interface PurchaseDetails {
   name: string;
   phone: string;
-  network: MomoNetwork;
   fulfillmentType: FulfillmentType;
   isInKumasi: boolean | null;
   deliveryAddress: string | null;
@@ -28,8 +27,6 @@ interface PurchaseDetailsModalProps {
   onConfirm: (details: PurchaseDetails) => void;
 }
 
-const NETWORKS: MomoNetwork[] = ['MTN MoMo', 'Telecel Cash', 'AT Money'];
-
 export default function PurchaseDetailsModal({
   open,
   productName,
@@ -41,7 +38,6 @@ export default function PurchaseDetailsModal({
 }: PurchaseDetailsModalProps) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [network, setNetwork] = useState<MomoNetwork>(NETWORKS[0]);
   const [fulfillmentType, setFulfillmentType] = useState<FulfillmentType>('pickup');
   const [isInKumasi, setIsInKumasi] = useState<boolean | null>(null);
   const [deliveryAddress, setDeliveryAddress] = useState('');
@@ -73,7 +69,6 @@ export default function PurchaseDetailsModal({
     onConfirm({
       name: name.trim(),
       phone: phone.trim(),
-      network,
       fulfillmentType,
       isInKumasi,
       deliveryAddress: fulfillmentType === 'delivery' && isInKumasi ? deliveryAddress.trim() : null,
@@ -141,22 +136,6 @@ export default function PurchaseDetailsModal({
                     className="input border-0 bg-transparent px-1"
                     required
                   />
-                </div>
-              </div>
-
-              <div className="field mb-4">
-                <label>Mobile Money network</label>
-                <div className="flex items-center gap-2 border border-[color:var(--color-divider)] bg-panel px-2">
-                  <Smartphone className="h-4 w-4 shrink-0 text-ink-500" />
-                  <select
-                    value={network}
-                    onChange={(e) => setNetwork(e.target.value as MomoNetwork)}
-                    className="input cursor-pointer border-0 bg-transparent px-1"
-                  >
-                    {NETWORKS.map((n) => (
-                      <option key={n} value={n}>{n}</option>
-                    ))}
-                  </select>
                 </div>
               </div>
 
@@ -246,11 +225,8 @@ export default function PurchaseDetailsModal({
               ) : (
                 <>
                   <button type="submit" disabled={submitting} className="btn btn-primary btn-block justify-center">
-                    {submitting ? 'Opening payment…' : 'Continue to payment'}
+                    {submitting ? 'Processing…' : 'Continue'}
                   </button>
-                  <p className="mt-3 text-center text-[11px] text-ink-500">
-                    You&apos;ll pay via {network} or card on the next screen, secured by Paystack.
-                  </p>
                 </>
               )}
             </form>
