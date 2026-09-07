@@ -27,8 +27,6 @@ export interface Profile {
   created_at: string;
 }
 
-export type MomoNetwork = 'MTN MoMo' | 'Telecel Cash' | 'AT Money';
-
 export type FulfillmentType = 'pickup' | 'delivery';
 
 export interface Order {
@@ -36,9 +34,7 @@ export interface Order {
   product_id: string | null;
   buyer_name: string;
   buyer_phone: string;
-  momo_network: MomoNetwork;
   amount_paid: number;
-  paystack_reference: string;
   status: 'paid' | 'failed' | 'pending';
   fulfillment_type: FulfillmentType;
   is_in_kumasi: boolean | null;
